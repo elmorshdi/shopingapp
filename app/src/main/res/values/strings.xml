@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">App Task</string>
+    <string name="hello_mostafa">Hello Mostafa!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_new_item">Add New Item</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_price">999999</string>
+    <string name="item_currency">EGP</string>
+    <string name="name">Name</string>
+    <string name="price">Price</string>
+    <string name="quantity">Quantity</string>
+    <string name="add">Add</string>
+    <string name="add_product">Add Product</string>
+    <string name="back_arrow">Back arrow</string>
+
+</resources>
