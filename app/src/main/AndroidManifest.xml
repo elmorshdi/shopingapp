@@ -13,6 +13,7 @@
         android:theme="@style/Theme.TrainingTask">
         <activity
             android:name=".ui.MainActivity"
+            android:screenOrientation="userPortrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

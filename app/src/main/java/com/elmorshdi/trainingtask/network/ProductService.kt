@@ -2,9 +2,10 @@ package com.elmorshdi.trainingtask.network
 
 import com.elmorshdi.trainingtask.util.Constant.BASE_URL
 import com.elmorshdi.trainingtask.util.Constant.TOKEN
+import kotlinx.coroutines.InternalCoroutinesApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -21,14 +22,28 @@ object RetrofitInstate {
     }
 
 class MyInterceptor: Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val request =chain.request()
-            .newBuilder()
-            .addHeader("Authorization",TOKEN)
-            .build()
+     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+      if (TOKEN==null){
+          val request =chain.request()
+              .newBuilder()
+//              .addHeader("Authorization","Bearer $TOKEN")
+              .addHeader("Accept", "application/json")
+              .build()
+          print("token null")
+          return chain.proceed(request)
+      }
+         else{
+          val request =chain.request()
+              .newBuilder()
+              .addHeader("Authorization","Bearer $TOKEN")
+              .addHeader("Accept", "application/json")
+              .build()
+          return chain.proceed(request)
+         }
 
-        return chain.proceed(request)
-    }
+
+
+     }
 }
 }
 

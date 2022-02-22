@@ -1,48 +1,46 @@
-package com.elmorshdi.trainingtask.ui.addproduct
+package com.elmorshdi.trainingtask.ui.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elmorshdi.trainingtask.model.Product
 import com.elmorshdi.trainingtask.network.apiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddItemViewModel : ViewModel() {
-    val addState: LiveData<Boolean>
-        get() = _addState
-    private val _addState: MutableLiveData<Boolean> = MutableLiveData()
+class LoginViewModel : ViewModel() {
+    val loginState: LiveData<Boolean>
+        get() = _loginState
+    private val _loginState: MutableLiveData<Boolean> = MutableLiveData()
     val stateCodeMessage: LiveData<String>
         get() = _stateCodeMessage
     private val _stateCodeMessage: MutableLiveData<String> = MutableLiveData()
 
+    var token: String? = null
+    var username: String? = null
 
-    fun postProduct(product: Product) {
+
+    fun login(email: String, password: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                try {val response = apiService.addProducts(product)
+
+                val response = apiService.login(email, password)
+                withContext(Dispatchers.IO) {
                     when (response.code()) {
                         200 -> {
-                            _addState.postValue(true)
+                            _loginState.postValue(response.body()?.status!!)
+                            token = response.body()?.token!!
+                            username = response.body()!!.data?.name!!
                         }
                         else -> {
-                            _addState.postValue(false)
+                            _loginState.postValue(false)
                             _stateCodeMessage.postValue(response.message().toString())
                         }
                     }
-                } catch (e: Exception) {
-                    _addState.postValue(false)
-                    _stateCodeMessage.postValue(e.toString())
                 }
-
-
             }
         }
     }
+
 }
-
-
-

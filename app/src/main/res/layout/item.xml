@@ -9,6 +9,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="@dimen/_120sdp"
         android:layout_height="@dimen/_150sdp"
+        android:id="@+id/item_card"
         app:rippleColor="@color/blue_dark"
         android:elevation="@dimen/_12sdp"
         android:padding="@dimen/_16sdp"
@@ -19,6 +20,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:id="@+id/container"
             android:layout_height="match_parent">
 
             <com.google.android.material.card.MaterialCardView
@@ -36,6 +38,7 @@
                     android:id="@+id/item_image"
                     android:layout_width="@dimen/_90sdp"
                     android:layout_height="@dimen/_90sdp"
+                    android:transitionName="imageView"
                     android:src="@drawable/ic_launcher_background"
                     android:contentDescription="@string/item_name" />
             </com.google.android.material.card.MaterialCardView>

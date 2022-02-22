@@ -1,7 +1,67 @@
 package com.elmorshdi.trainingtask.util
 
+import android.content.Context
+import android.view.View
+import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import com.github.ybq.android.spinkit.SpinKitView
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.DoubleBounce
+
+
 object Constant {
     const val BASE_URL = "https://android-training.appssquare.com/api/"
-    const val TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOWQzYzdkZmJmZDE0OTM2ZGJlMmE1MGFhZjYwZTM3NzA2OGI0YmRjNzFhYTNiNzYzNDc3NjNjMDM4NjQ1ZGVkYjVjOTk1YmQ3ZjVhOWQyYmIiLCJpYXQiOjE2NDQ0MzE5ODcuNTM1NTk1LCJuYmYiOjE2NDQ0MzE5ODcuNTM1NiwiZXhwIjoxNjc1OTY3OTg3LjUyNTk4NCwic3ViIjoiMSIsInNjb3BlcyI6W119.Y8uq2XgZJf0rQaRWpMgV5slzw1CwmT2uGxa9VUVgvCX1yEeskcPn02fUKljijlnCattCE9MjF779cI0bOrZgED1LG4gGl26jt0bzedZXK268pHjaUAwhK9W4rwWPqIp8RNbq-1-N_nWnnUZJbUSfiYKWQ17xSJNW9ylOlTCVZADPqwZeeHGpyfQ5knPpF3HxxRjI9xIwGJsepI3_Vjyw-drF9vFM2bPqccKY8ERLxlWSBXYaMT1sw16zSRY9FXmDHkN8br4Qp7kyIx0Gh5OZvNt08imUBnMXzh4K8nEmm_20eFhEQLdGs1yHkWY0EDXlRbkO9bRbytF70dqboPuNsIXCWmcRaECtY6Bzq3UfXLUetmtYmX979ECkyY83NTZvrNZemkfkyGDsRkTSBZVk6QDhnCWpGbbCXKWb8mgNUw9BDQazzLImwebiXKqR8guWMgRqVjEDVbA76dgIrMDeZo9ZhzwpxdiuzUOh7WfTxER01OS578mB7qYdf0pQZ_y-5aNoK5jKnr3xTB10A-bSNFRMELJgI8TQVMaQAkV9uL6k6SYFlbllK7XOOhjxSS_02VbxtpW-AzpvNDFM-Oq6q6rqzblx2bVxRbljS-larkQQ1l8zsq5soR9rbwVZ_Xw6NfhSym6wb0y1SbRvqsrkYLY-5D_kutuP-n6ux41hV7M"
+    var TOKEN:String? = null
+    fun alertDialog(title:String, message:String, context: Context, myFunction: (Int) -> Unit,id: Int) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        //performing positive action
+        builder.setPositiveButton("Yes") { _, _ ->
+            myFunction(id)
+        }
+        builder.setNeutralButton("Cancel"){ _, _ ->
+
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
+     fun alertDialog(title:String, message:String, context: Context, myFunction: () -> Unit) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        //performing positive action
+        builder.setPositiveButton("Yes") { _, _ ->
+            myFunction()
+        }
+         builder.setNeutralButton("Cancel"){ _, _ ->
+
+          }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+    fun setProgressBar(loginSpinKit: SpinKitView): ProgressBar {
+        val progressBar = loginSpinKit as ProgressBar
+        val doubleBounce: Sprite = DoubleBounce()
+        progressBar.indeterminateDrawable = doubleBounce
+        progressBar.visibility = View.VISIBLE
+        return progressBar
+    }
+    fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+        observe(lifecycleOwner, object : Observer<T> {
+            override fun onChanged(t: T?) {
+                observer.onChanged(t)
+                removeObserver(this)
+            }
+        })
+    }
 
 }

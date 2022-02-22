@@ -17,22 +17,22 @@
             android:id="@+id/custom_action_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue_dark"
+            android:background="@color/blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/add_backArrow"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:tint="@color/white"
-                android:id="@+id/add_backArrow"
                 android:layout_margin="@dimen/_10sdp"
+                android:contentDescription="@string/back_arrow"
                 android:src="@drawable/ic_baseline_arrow_back_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:contentDescription="@string/back_arrow" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView"
@@ -84,6 +84,7 @@
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:hint="@string/name"
+                    app:boxStrokeColor="@color/blue"
                     app:layout_constraintBottom_toTopOf="@id/addPriceTextField"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +92,6 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/addNameEditText"
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -109,6 +109,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
+                    app:boxStrokeColor="@color/blue"
                     app:layout_constraintBottom_toTopOf="@id/addQuantityTextField"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +121,6 @@
                         android:layout_height="match_parent"
                         android:hint="@string/price"
                         android:inputType="numberDecimal"
-
                         android:maxLength="8"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18ssp" />
@@ -136,6 +136,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
+                    app:boxStrokeColor="@color/blue"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/addPriceTextField">

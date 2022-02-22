@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,9 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.elmorshdi.trainingtask.databinding.FragmentAddItemBinding
 import com.elmorshdi.trainingtask.model.Product
-import com.elmorshdi.trainingtask.ui.mainpage.MainFragmentDirections
-import com.github.ybq.android.spinkit.sprite.Sprite
-import com.github.ybq.android.spinkit.style.DoubleBounce
+import com.elmorshdi.trainingtask.util.Constant.observeOnce
+import com.elmorshdi.trainingtask.util.Constant.setProgressBar
 
 
 class AddItemFragment : Fragment() {
@@ -27,7 +25,6 @@ class AddItemFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentAddItemBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -37,10 +34,14 @@ class AddItemFragment : Fragment() {
         binding.addButton.setOnClickListener {
             validations()
         }
-        val action = AddItemFragmentDirections.actionAddItemFragmentToMainFragment()
         binding.addBackArrow.setOnClickListener {
-            view.findNavController().navigate(action)
+            navigateToMain(view)
         }
+    }
+
+    private fun navigateToMain(view: View) {
+        val action = AddItemFragmentDirections.actionAddItemFragmentToMainFragment()
+        view.findNavController().navigate(action)
     }
 
     private fun validations() {
@@ -92,26 +93,19 @@ class AddItemFragment : Fragment() {
 
     private fun postProduct(product: Product) {
         viewModel.postProduct(product)
-        val progressBar = binding.addSpinKit as ProgressBar
-        val doubleBounce: Sprite = DoubleBounce()
-        progressBar.indeterminateDrawable = doubleBounce
-        progressBar.visibility = View.VISIBLE
-        viewModel.addState.observe(viewLifecycleOwner, Observer { status ->
+        val progressBar = setProgressBar(binding.addSpinKit)
+        viewModel.addState.observeOnce(viewLifecycleOwner, Observer { status ->
             if (status) {
                 progressBar.visibility = View.INVISIBLE
-
-                 Toast.makeText(requireContext(), "Product Added", Toast.LENGTH_LONG).show()
-
+                Toast.makeText(requireContext(), "Product Added", Toast.LENGTH_LONG).show()
                 clearPage()
             } else {
-                viewModel.stateCode.observe(viewLifecycleOwner, Observer {
+                viewModel.stateCodeMessage.observeOnce(viewLifecycleOwner, Observer {
                     progressBar.visibility = View.INVISIBLE
-                    Toast.makeText(requireContext(), "Err0r:$it", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
                 })
-
             }
         })
-
 
     }
 
@@ -121,7 +115,4 @@ class AddItemFragment : Fragment() {
         binding.addQuantityEditText.setText("")
 
     }
-
-
-
 }

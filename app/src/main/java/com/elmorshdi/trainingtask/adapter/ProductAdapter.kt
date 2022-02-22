@@ -1,15 +1,20 @@
-package com.elmorshdi.trainingtask;
+package com.elmorshdi.trainingtask.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.elmorshdi.trainingtask.R
 import com.elmorshdi.trainingtask.model.Product
 
 
-class ProductAdapter(private val list: List<Product>) : RecyclerView.Adapter<ProductViewHolder>() {
+class ProductAdapter(private val list: List<Product>, private val interaction: Interaction) : RecyclerView.Adapter<ProductViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -18,11 +23,13 @@ class ProductAdapter(private val list: List<Product>) : RecyclerView.Adapter<Pro
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val item: Product = list[position]
-        holder.bind(item)
+        holder.bind(item,interaction)
     }
 
     override fun getItemCount(): Int = list.size
-
+    interface Interaction {
+        fun onItemSelected(product: Product)
+    }
 }
 
 class ProductViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -30,21 +37,27 @@ class ProductViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
    private var name: AppCompatTextView? = null
     private var price: AppCompatTextView? = null
     private var image: ImageView? = null
+    private var card: ConstraintLayout? = null
 
 
     init {
         name = itemView.findViewById(R.id.item_name)
         price = itemView.findViewById(R.id.item_price)
-        image = itemView.findViewById(R.id.item_image)
+        image = itemView.findViewById(R.id.item_image )
+        card = itemView.findViewById(R.id.container)
+
     }
 
-    fun bind(item: Product) {
+    fun bind(item: Product ,interaction: ProductAdapter.Interaction
+    ) {
         Glide.with(image!!.context)
             .load(item.image)
             .error(R.drawable.ic_launcher_background)
             .into(image!!)
         name?.text = item.name
-       price?.text = item.price.toString()
+        price?.text = item.price.toString()
+        card?.setOnClickListener {
+            interaction.onItemSelected(item)
+        }
     }
-
 }
