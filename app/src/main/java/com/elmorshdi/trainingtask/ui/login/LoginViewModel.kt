@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elmorshdi.trainingtask.network.apiService
+import com.elmorshdi.trainingtask.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,8 +25,8 @@ class LoginViewModel : ViewModel() {
     fun login(email: String, password: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-
-                val response = apiService.login(email, password)
+                val repository= Repository()
+                val response = repository.login(email, password)
                 withContext(Dispatchers.IO) {
                     when (response.code()) {
                         200 -> {

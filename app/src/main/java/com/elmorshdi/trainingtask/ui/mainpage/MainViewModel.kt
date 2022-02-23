@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elmorshdi.trainingtask.model.Product
 import com.elmorshdi.trainingtask.network.apiService
+import com.elmorshdi.trainingtask.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +33,8 @@ class MainViewModel : ViewModel() {
             withContext(Dispatchers.IO) {
 
                 try {
-                    val response = apiService.getProducts()
+                    val repository= Repository()
+                    val response = repository.getProducts()
                     when (response.code()) {
                         200 -> {
                             _state.postValue(true)

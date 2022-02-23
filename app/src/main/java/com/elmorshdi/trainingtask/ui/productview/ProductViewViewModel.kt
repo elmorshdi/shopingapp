@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elmorshdi.trainingtask.network.apiService
+import com.elmorshdi.trainingtask.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,7 +23,8 @@ class ProductViewViewModel : ViewModel() {
             withContext(Dispatchers.IO) {
 
                 try {
-                    val response = apiService.deleteProduct(id)
+                    val repository= Repository()
+                    val response = repository.deleteProduct(id)
                     when (response.code()) {
                         200 -> {
                             _deleteState.postValue(true)

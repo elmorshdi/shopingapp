@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elmorshdi.trainingtask.model.Product
 import com.elmorshdi.trainingtask.network.apiService
+import com.elmorshdi.trainingtask.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,7 +24,9 @@ class AddItemViewModel : ViewModel() {
     fun postProduct(product: Product) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                try {val response = apiService.addProducts(product)
+                try {
+                    val repository=Repository()
+                    val response = repository.addProducts(product)
                     when (response.code()) {
                         200 -> {
                             _addState.postValue(true)
