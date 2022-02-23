@@ -56,8 +56,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_custom_action_bar"
-            app:tabSelectedTextColor="@color/yellow"
-            app:tabTextColor="@color/white">
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="#CACACA">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"

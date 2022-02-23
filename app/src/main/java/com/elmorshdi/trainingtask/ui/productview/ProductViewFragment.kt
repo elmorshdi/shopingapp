@@ -44,6 +44,7 @@ class ProductViewFragment : Fragment() {
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ false)
         setViews(args.product)
+        binding.appCompatTextView.text=args.product.name
         binding.editBackArrow.setOnClickListener {
             navigateToMain(view)
         }
