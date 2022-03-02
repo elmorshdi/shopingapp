@@ -12,31 +12,31 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/item_card"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_100sdp"
-        android:id="@+id/item_card"
-        app:rippleColor="@color/blue_dark"
+        android:layout_margin="@dimen/_8sdp"
+        android:background="@color/gray"
         android:elevation="@dimen/_18sdp"
         android:padding="@dimen/_16sdp"
-        android:layout_margin="@dimen/_8sdp"
         android:translationZ="@dimen/_8sdp"
-        android:background="@color/gray"
-        app:cardCornerRadius="@dimen/_12sdp">
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:rippleColor="@color/blue_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
             android:id="@+id/container"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardView"
-                app:cardCornerRadius="@dimen/_45sdp"
-                app:cardPreventCornerOverlap="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:translationZ="@dimen/_18sdp"
                 android:elevation="@dimen/_18sdp"
                 android:shadowColor="@color/yellow"
+                android:translationZ="@dimen/_18sdp"
+                app:cardCornerRadius="@dimen/_45sdp"
+                app:cardPreventCornerOverlap="false"
                 app:layout_constraintBottom_toBottomOf="parent"
 
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,62 +44,82 @@
 
                 <ImageView
                     android:id="@+id/itemHor_image"
+                    loadImageUrl="@{product.image}"
                     android:layout_width="@dimen/_90sdp"
                     android:layout_height="@dimen/_90sdp"
-                    android:transitionName="imageView"
-                    loadImageUrl="@{product.image}"
+                    android:contentDescription="@string/item_name"
 
                     android:src="@drawable/ic_launcher_background"
-                    android:contentDescription="@string/item_name" />
+                    android:transitionName="imageView" />
             </com.google.android.material.card.MaterialCardView>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/itemHor_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:text="@{product.name}"
-                android:textColor="@color/blue"
-                android:maxLines="1"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:textSize="@dimen/_10ssp"
-                android:textStyle="bold"
-                android:layout_marginStart="@dimen/_4sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/cardView"
-                app:layout_constraintTop_toTopOf="parent" />
 <LinearLayout
-
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_5sdp"
-    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/det_linear"
+    android:layout_marginStart="@dimen/_4sdp"
+    app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toEndOf="@id/cardView"
-    app:layout_constraintTop_toBottomOf="@id/itemHor_name">
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent">
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/itemHor_price"
+        android:id="@+id/itemHor_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:text="@{product.price.toString()}"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_10ssp"
-       />
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/itemHor_currency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/item_currency"
-        android:textColor="@color/yellow"
-        android:textSize="@dimen/_10ssp"
-        android:layout_marginStart="@dimen/_2sdp"
+         android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_4sdp"
+        android:maxLines="1"
+        android:text="@{product.name}"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/_10ssp"
         android:textStyle="bold"
-        android:layout_marginBottom="@dimen/_4sdp"
-
         />
 
+    <LinearLayout
+
+        android:id="@+id/price_liner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@id/cardView"
+        app:layout_constraintTop_toBottomOf="@id/itemHor_name">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/itemHor_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:text="@{product.price.toString()}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/itemHor_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:text="@string/item_currency"
+            android:textColor="@color/yellow"
+            android:textSize="@dimen/_10ssp"
+            android:textStyle="bold"
+
+            />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp"
+        android:transitionName="quantityText"
+
+        app:setQuantity="@{product.quantity.toString()}" />
 </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
