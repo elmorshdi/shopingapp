@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.elmorshdi.trainingtask.view.ui.mainpage.MainViewModel" />
+    </data>
+<com.google.android.material.circularreveal.cardview.CircularRevealCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    app:cardCornerRadius="@dimen/_18sdp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="40dp"
+    app:layout_behavior="com.google.android.material.bottomed.BottomSheetBehavior">
+
+<LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+
+    >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:textAlignment="center"
+            android:id="@+id/textViewSortBy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:padding="@dimen/_5sdp"
+            android:textSize="@dimen/_18sdp"
+            android:textColor="@color/white"
+            android:background="@color/blue"
+
+            android:layout_gravity="center_horizontal"
+            android:text="@string/sort_by" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textAlignment="center"
+            android:id="@+id/buttonMostRecent"
+            android:layout_width="match_parent"
+        android:layout_margin="@dimen/_4sdp"
+             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            android:text="@string/most_recent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textAlignment="center"
+
+            android:id="@+id/buttonPriceLtoH"
+            android:layout_width="match_parent"
+        android:layout_margin="@dimen/_4sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            android:background="@color/white"
+            android:text="@string/price_low_to_high" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textAlignment="center"
+            android:id="@+id/buttonPriceHtoL"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            android:background="@color/white"
+            android:text="@string/price_high_to_low" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/buttonName"
+            android:layout_width="match_parent"
+        android:layout_margin="@dimen/_4sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:text="@string/name_a_to_z" />
+    </LinearLayout>
+</com.google.android.material.circularreveal.cardview.CircularRevealCardView>
+
+</layout>

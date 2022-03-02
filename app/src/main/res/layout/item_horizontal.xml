@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.elmorshdi.trainingtask.domain.model.Product" />
+
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:id="@+id/item_card"
+        app:rippleColor="@color/blue_dark"
+        android:elevation="@dimen/_18sdp"
+        android:padding="@dimen/_16sdp"
+        android:layout_margin="@dimen/_8sdp"
+        android:translationZ="@dimen/_8sdp"
+        android:background="@color/gray"
+        app:cardCornerRadius="@dimen/_12sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/container"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView"
+                app:cardCornerRadius="@dimen/_45sdp"
+                app:cardPreventCornerOverlap="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:translationZ="@dimen/_18sdp"
+                android:elevation="@dimen/_18sdp"
+                android:shadowColor="@color/yellow"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/itemHor_image"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    android:transitionName="imageView"
+                    loadImageUrl="@{product.image}"
+
+                    android:src="@drawable/ic_launcher_background"
+                    android:contentDescription="@string/item_name" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/itemHor_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:text="@{product.name}"
+                android:textColor="@color/blue"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_10ssp"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/_4sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cardView"
+                app:layout_constraintTop_toTopOf="parent" />
+<LinearLayout
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginStart="@dimen/_5sdp"
+    app:layout_constraintStart_toEndOf="@id/cardView"
+    app:layout_constraintTop_toBottomOf="@id/itemHor_name">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/itemHor_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:text="@{product.price.toString()}"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp"
+       />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/itemHor_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_currency"
+        android:textColor="@color/yellow"
+        android:textSize="@dimen/_10ssp"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/_4sdp"
+
+        />
+
+</LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -15,14 +15,23 @@
     <string name="email_or_phone_number">Email or phone number</string>
     <string name="password">password</string>
     <string name="log_in">Log In</string>
-    <string name="price_10_to_20">price:10 to 20</string>
-    <string name="price_20_to_30">price:20 to 30</string>
-    <string name="price_30_to_40">price:30 to 40</string>
     <string name="product">Product</string>
     <string name="delete_item">delete item</string>
     <string name="dialogTitle" translatable="false">Delete Product </string>
     <string name="dialogMessage" translatable="false">Are Sure Deleting Product</string>
     <string name="logo">logo</string>
     <string name="todo">TODO</string>
+    <string name="sort_by_most_recent">sort By : Most Recent </string>
+    <string name="sort_by_price_low_to_high">sort By : Low To High</string>
+    <string name="sort_by_price_high_to_low">sort By : Price : High To Low</string>
+    <string name="sort_by_name_a_to_z">sort By : Name : A To Z</string>
+
+    <string name="most_recent">Most Recent</string>
+    <string name="price_low_to_high">Price : Low To High</string>
+    <string name="price_high_to_low">Price : High To Low</string>
+    <string name="name_a_to_z">Name : A To Z</string>
+    <string name="sort_by">Sort By :</string>
+    <string name="Invalid_password"> InValid Password </string>
+    <string name="enter_valid_email"> Enter Valid Email </string>
 
 </resources>

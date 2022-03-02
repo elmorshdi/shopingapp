@@ -4,95 +4,132 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="product"
+            type="com.elmorshdi.trainingtask.domain.model.Product" />
+
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_150sdp"
         android:id="@+id/item_card"
-        app:rippleColor="@color/blue_dark"
-        android:elevation="@dimen/_18sdp"
-        android:padding="@dimen/_16sdp"
-        android:layout_margin="@dimen/_8sdp"
-        android:translationZ="@dimen/_8sdp"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_160sdp"
+        android:layout_margin="@dimen/_6sdp"
         android:background="@color/gray"
-        app:cardCornerRadius="@dimen/_12sdp">
+        android:elevation="@dimen/_18sdp"
+        android:padding="@dimen/_8sdp"
+        android:translationZ="@dimen/_8sdp"
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:rippleColor="@color/blue_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
             android:id="@+id/container"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardView"
-                app:cardCornerRadius="@dimen/_45sdp"
-                app:cardPreventCornerOverlap="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:translationZ="@dimen/_18sdp"
+                android:layout_margin="@dimen/_8sdp"
                 android:elevation="@dimen/_18sdp"
                 android:shadowColor="@color/yellow"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:translationZ="@dimen/_18sdp"
+                app:cardCornerRadius="@dimen/_45sdp"
+                app:cardPreventCornerOverlap="false"
                 app:layout_constraintBottom_toTopOf="@id/item_name"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/item_image"
+                    loadImageUrl="@{product.image}"
                     android:layout_width="@dimen/_90sdp"
                     android:layout_height="@dimen/_90sdp"
-                    android:transitionName="imageView"
+                    android:contentDescription="@string/item_name"
                     android:src="@drawable/ic_launcher_background"
-                    android:contentDescription="@string/item_name" />
+                    android:transitionName="imageView" />
             </com.google.android.material.card.MaterialCardView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/item_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:text="@string/item_name"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:singleLine="true"
+                android:text="@{product.name}"
                 android:textColor="@color/blue"
-                android:maxLines="1"
                 android:textSize="@dimen/_10ssp"
                 android:textStyle="bold"
-                android:layout_marginStart="@dimen/_4sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:transitionName="nameText"
+                app:layout_constraintBottom_toTopOf="@id/price_liner"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardView" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/item_price"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/price_liner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_2sdp"
-                android:text="@string/item_price"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10ssp"
-                app:layout_constraintHorizontal_bias=".70"
-                android:textAlignment="textEnd"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/item_currency"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/item_quantity"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/item_name" />
+                app:layout_constraintTop_toBottomOf="@id/item_name">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/item_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_weight="4"
+                    android:text="@{product.price.toString()}"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:transitionName="priceText"
+
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintHorizontal_bias=".70" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/item_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+
+                    android:text="@string/item_currency"
+                    android:textColor="@color/yellow"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/item_currency"
-                android:layout_width="wrap_content"
+                android:id="@+id/item_quantity"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/item_currency"
-                android:textColor="@color/yellow"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/_4sdp"
+                android:transitionName="quantityText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/item_price"
-                app:layout_constraintTop_toBottomOf="@id/item_name" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/price_liner"
+                app:setQuantity="@{product.quantity.toString()}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

@@ -9,37 +9,34 @@
         motion:duration="4000">
         <KeyFrameSet>
             <KeyAttribute
-                android:scaleX=".7"
-                android:scaleY=".7"
+                android:scaleX="1"
+                android:scaleY="1"
                 motion:framePosition="1"
                 motion:motionTarget="@+id/View" />
+
+
+
             <KeyAttribute
                 android:scaleX="10"
                 android:scaleY="10"
-                motion:framePosition="40"
+                motion:framePosition="45"
                 motion:motionTarget="@+id/View" />
-
             <KeyAttribute
-                android:scaleX="15"
-                android:scaleY="15"
-                motion:framePosition="70"
+                motion:motionTarget="@+id/IconView"
+                motion:framePosition="45"
+                motion:transitionPathRotate="360"
+                 />
+            <KeyAttribute
+                android:scaleX="0"
+                android:scaleY="0"
+                motion:framePosition="95"
                 motion:motionTarget="@+id/View" />
-
             <KeyAttribute
-                android:scaleX="50"
-                android:scaleY="50"
+                android:scaleX="1"
+                android:scaleY="1"
                 motion:framePosition="100"
                 motion:motionTarget="@+id/View" />
-            <KeyAttribute
-                motion:motionTarget="@+id/IconView"
-                motion:framePosition="50"
-                motion:transitionPathRotate="359"
-                 />
 
-            <KeyAttribute
-                motion:motionTarget="@+id/IconView"
-                motion:framePosition="90"
-                android:translationZ="@dimen/_64sdp"/>
 
 
         </KeyFrameSet>

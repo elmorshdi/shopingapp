@@ -4,14 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
+        <variable
+            name="viewModel"
+            type="com.elmorshdi.trainingtask.view.ui.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.login.LoginFragment">
+        tools:context=".view.ui.login.LoginFragment"
+        app:showToast= "@{viewModel.stateCodeMessage}">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/loginImageView"
@@ -67,6 +72,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:passwordToggleEnabled="true"
             app:layout_constraintStart_toStartOf="parent"
+
             app:boxStrokeColor="@color/blue"
             app:layout_constraintTop_toBottomOf="@id/login_emailTextField">
 
@@ -78,6 +84,17 @@
                 android:inputType="textPassword"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_18ssp" />
+            <TextView
+                android:id="@+id/errorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:gravity="start"
+                android:padding="8dp"
+                android:textColor="@color/red"
+                android:textSize="@dimen/_12ssp"/>
+<!--tools:text="Password minimum length 8 \n1 uppercase\n1 number\n1 special character"-->
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="invisible"
+            android:visibility="@{viewModel.isLoading()?View.VISIBLE:View.GONE}"
             android:translationZ="@dimen/_18sdp"
 
             app:SpinKit_Color="@color/yellow"

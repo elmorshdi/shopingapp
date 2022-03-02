@@ -5,19 +5,29 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="product"
+            type="com.elmorshdi.trainingtask.domain.model.Product" />
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.elmorshdi.trainingtask.view.ui.productview.ProductViewViewModel" />
+
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.productview.ProductViewFragment">
+        app:showToast="@{viewModel.errorMessage}"
+        tools:context=".view.ui.productview.ProductViewFragment">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/edit_custom_action_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:background="@color/blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +41,7 @@
                 android:contentDescription="@string/back_arrow"
                 android:src="@drawable/ic_baseline_arrow_back_24"
                 android:tint="@color/white"
+                android:onClick="@{viewModel::navigateToMain}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,13 +51,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
-                android:text="@string/product"
+                android:text="@{product.name}"
+                android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_22ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/view_spin_kit"
@@ -54,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="invisible"
+            android:visibility="@{viewModel.isLoading()?View.VISIBLE:View.GONE}"
             app:SpinKit_Color="@color/yellow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,11 +76,11 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
-            app:cardCornerRadius="@dimen/_45sdp"
+            app:cardCornerRadius="@dimen/_125sdp"
             app:cardPreventCornerOverlap="false"
-            android:layout_margin="@dimen/_18sdp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
+            android:layout_margin="@dimen/_8sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/item_name"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,10 +88,11 @@
 
             <ImageView
                 android:id="@+id/item_image"
-                android:layout_width="match_parent"
-                android:layout_height="270dp"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_250sdp"
                 android:transitionName="imageView"
                 app:layout_collapseMode="parallax"
+                app:loadImageUrl="@{product.image}"
                 android:contentDescription="@string/item_name"
                 android:src="@drawable/ic_launcher_background" />
         </com.google.android.material.card.MaterialCardView>
@@ -91,6 +104,9 @@
             android:layout_margin="@dimen/_18sdp"
             android:textColor="@color/blue"
             android:maxLines="1"
+            android:transitionName="nameText"
+
+            android:text="@{product.name}"
             android:textSize="@dimen/_18ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,9 +118,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_4sdp"
             android:layout_margin="@dimen/_18sdp"
-
+            android:text="@{product.price.toString()}"
             android:textColor="@color/black"
             android:textSize="@dimen/_18ssp"
+            android:transitionName="priceText"
+
             android:textAlignment="textEnd"
             android:layout_marginBottom="@dimen/_4sdp"
             app:layout_constraintEnd_toStartOf="@id/item_currency"
@@ -130,24 +148,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_18sdp"
-            android:text="@string/quantity"
             android:textColor="@color/blue"
-            android:maxLines="1"
+            android:singleLine="true"
             android:textSize="@dimen/_18ssp"
             android:textStyle="bold"
+            android:transitionName="quantityText"
+            app:setQuantity="@{product.quantity.toString()}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_price" />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/item_quantity_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_18ssp"
-            android:layout_marginStart="@dimen/_2sdp"
-            android:layout_margin="@dimen/_18sdp"
-            android:textStyle="bold"
-            android:layout_marginBottom="@dimen/_4sdp"
-            app:layout_constraintStart_toEndOf="@id/item_quantity"
             app:layout_constraintTop_toBottomOf="@id/item_price" />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/delete_button"
@@ -158,6 +165,7 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@color/red"
             android:text="@string/delete_item"
+            android:onClick="@{()->viewModel.deleteButtonOnClickListener(deleteButton,product.id)}"
             android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintBottom_toBottomOf="parent"
