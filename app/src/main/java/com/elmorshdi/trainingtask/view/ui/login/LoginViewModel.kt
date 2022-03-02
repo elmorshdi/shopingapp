@@ -32,25 +32,38 @@ class LoginViewModel @Inject constructor(
     fun login(email: String, password: String, view: View) {
         _isLoading.postValue(true)
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val response = repository.login(email, password)
-                withContext(Dispatchers.Main) {
-                    when (response.code()) {
-                        200 -> {
-                             SharedPreferencesManager.signInShared(
-                                sharedPreferences,
-                                response.body()?.token!!,
-                                response.body()!!.data?.name!!
-                            )
-                            _isLoading.postValue(false)
-                            navigateToMain(view)
-                        }
-                        else -> {
-                            _isLoading.postValue(false)
-                            _stateCodeMessage.postValue(response.message().toString())
+            try { withContext(Dispatchers.IO) {
+
+                    val response = repository.login(email, password)
+                    withContext(Dispatchers.Main) {
+                        when (response.code()) {
+                            200 -> {
+                                SharedPreferencesManager.signInShared(
+                                    sharedPreferences,
+                                    response.body()?.token!!,
+                                    response.body()!!.data?.name!!
+                                )
+                                _isLoading.postValue(false)
+                                navigateToMain(view)
+                            }
+                            else -> {
+                                _isLoading.postValue(false)
+                                _stateCodeMessage.postValue(response.errorBody().toString())
+                            }
                         }
                     }
-                }
+
+            }
+            } catch (e: Exception) {
+            _isLoading.postValue(false)
+            _stateCodeMessage.postValue(e.toString())
+//                navigateToMain(view)
+//                SharedPreferencesManager.signInShared(
+//                    sharedPreferences,
+//                    "response.body()?.token!!",
+//                    "response.body()!!.data?.name!!"
+//                )
+//                TODO() //remove navigate
             }
         }
     }

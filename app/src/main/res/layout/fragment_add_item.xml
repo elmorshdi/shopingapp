@@ -55,6 +55,8 @@
             android:layout_gravity="center"
             android:visibility="invisible"
             app:SpinKit_Color="@color/yellow"
+            android:translationZ="@dimen/_20sdp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

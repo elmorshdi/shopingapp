@@ -1,30 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+>
     <data>
 
         <variable
             name="viewModel"
             type="com.elmorshdi.trainingtask.view.ui.mainpage.MainViewModel" />
     </data>
-<com.google.android.material.circularreveal.cardview.CircularRevealCardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    app:cardCornerRadius="@dimen/_18sdp"
-    app:behavior_hideable="false"
-    app:behavior_peekHeight="40dp"
-    app:layout_behavior="com.google.android.material.bottomed.BottomSheetBehavior">
 
-<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayout"
         android:orientation="vertical"
-        android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-
-    >
-
+       android:background="@drawable/bottom_sheet_bc">
         <androidx.appcompat.widget.AppCompatTextView
             android:textAlignment="center"
             android:id="@+id/textViewSortBy"
@@ -34,10 +23,20 @@
             android:padding="@dimen/_5sdp"
             android:textSize="@dimen/_18sdp"
             android:textColor="@color/white"
-            android:background="@color/blue"
-
+            android:background="@drawable/bottom_sheet_bar"
+            android:translationZ="@dimen/_20sdp"
             android:layout_gravity="center_horizontal"
             android:text="@string/sort_by" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:weightSum="10"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:textAlignment="center"
@@ -88,6 +87,6 @@
             android:layout_height="wrap_content"
             android:text="@string/name_a_to_z" />
     </LinearLayout>
-</com.google.android.material.circularreveal.cardview.CircularRevealCardView>
+</LinearLayout>
 
 </layout>

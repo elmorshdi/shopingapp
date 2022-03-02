@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.RecyclerView.SmoothScroller
 import com.elmorshdi.trainingtask.databinding.FragmentMainBinding
 import com.elmorshdi.trainingtask.domain.model.Product
 import com.elmorshdi.trainingtask.helper.showBottomSheet
@@ -17,6 +18,7 @@ import com.elmorshdi.trainingtask.view.adapter.HorizontalProductAdapter
 import com.elmorshdi.trainingtask.view.util.SharedPreferencesManager.getUsername
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 
@@ -35,7 +37,9 @@ class MainFragment : Fragment(), GridProductAdapter.Interaction,
 
 
         binding.sortButton.setOnClickListener {
-            showBottomSheet(requireContext(), viewModel, layoutInflater)
+           val bottomSheet=showBottomSheet(requireContext(), viewModel, layoutInflater)
+            bottomSheet.setCanceledOnTouchOutside(true)
+
         }
 
 
@@ -44,16 +48,13 @@ class MainFragment : Fragment(), GridProductAdapter.Interaction,
 
     private fun setUpRecyclerView() {
         //Setup Hor recyclerView
-        val pagerSnapHelperHor = PagerSnapHelper()
-        pagerSnapHelperHor.attachToRecyclerView(binding.mainRecyclerHor)
         val adapterHor = HorizontalProductAdapter(interaction = this)
         binding.mainRecyclerHor.adapter = adapterHor
-
         //Setup Grid recyclerView
-        val pagerSnapHelper = PagerSnapHelper()
-        pagerSnapHelper.attachToRecyclerView(binding.mainRecycler)
         val adapter = GridProductAdapter(interaction = this)
         binding.mainRecycler.adapter = adapter
+
+
 
     }
 

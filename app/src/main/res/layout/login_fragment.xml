@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="@{viewModel.isLoading()?View.VISIBLE:View.GONE}"
-            android:translationZ="@dimen/_18sdp"
+            android:translationZ="@dimen/_20sdp"
 
             app:SpinKit_Color="@color/yellow"
             app:layout_constraintBottom_toBottomOf="parent"

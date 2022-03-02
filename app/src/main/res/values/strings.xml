@@ -31,7 +31,11 @@
     <string name="price_high_to_low">Price : High To Low</string>
     <string name="name_a_to_z">Name : A To Z</string>
     <string name="sort_by">Sort By :</string>
-    <string name="Invalid_password"> InValid Password </string>
+    <string name="Invalid_password"> * InValid Password\n
+    It Must contains At least 8 characters\n
+A mixture of both uppercase and lowercase letters\n
+A mixture of letters and numbers\n
+Inclusion of at least one special character !@#$%^&amp;+=_</string>
     <string name="enter_valid_email"> Enter Valid Email </string>
 
 </resources>

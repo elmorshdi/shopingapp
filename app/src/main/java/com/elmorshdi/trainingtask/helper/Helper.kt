@@ -58,8 +58,9 @@ fun setProgressBar(loginSpinKit: SpinKitView): ProgressBar {
     context: Context,
     viewModel: MainViewModel,
     layoutInflater: LayoutInflater
-) {
-    val bottomSheet = BottomSheetDialog(context)
+):BottomSheetDialog {
+    val bottomSheet = BottomSheetDialog(context,R.style.BottomSheetDialogStyle)
+
     val bindingSheet = DataBindingUtil.inflate<BottomSheetDialogBinding>(
         layoutInflater,
         R.layout.bottom_sheet_dialog,
@@ -67,6 +68,7 @@ fun setProgressBar(loginSpinKit: SpinKitView): ProgressBar {
         false
     )
     bottomSheet.setContentView(bindingSheet.root)
+
     bindingSheet.buttonMostRecent.setOnClickListener {
         viewModel.sortBy(0)
         bottomSheet.dismiss()
@@ -83,9 +85,13 @@ fun setProgressBar(loginSpinKit: SpinKitView): ProgressBar {
         viewModel.sortBy(3)
         bottomSheet.dismiss()
     }
+     bindingSheet.textViewSortBy.setOnClickListener {
+        bottomSheet.dismiss()
+    }
     bottomSheet.setCancelable(false)
 
     bottomSheet.setContentView(bindingSheet.root)
 
     bottomSheet.show()
+     return bottomSheet
 }

@@ -57,7 +57,7 @@ class LoginFragment : Fragment() {
             binding.loginPasswordEditText.text?.isValidPassword() == false -> {
                 binding.loginPasswordTextField.boxStrokeColor = Color.RED
                 binding.errorTextView.visibility = View.VISIBLE
-                binding.errorTextView.text = getString(R.string.Invalid_password)
+                binding.errorTextView.text =getString(R.string.Invalid_password)
             }
             else -> {
                 val email = binding.loginEmailEditText.text?.trim().toString()

@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.elmorshdi.trainingtask.databinding.FragmentAddItemBinding
 import com.elmorshdi.trainingtask.domain.model.Product
+import com.elmorshdi.trainingtask.helper.containDigit
 import com.elmorshdi.trainingtask.helper.observeOnce
 import com.elmorshdi.trainingtask.helper.setProgressBar
 import com.elmorshdi.trainingtask.view.ui.mainpage.MainViewModel
@@ -51,6 +53,9 @@ class AddItemFragment : Fragment() {
 
             binding.addNameEditText.text?.trim()?.isEmpty() == true -> {
                 binding.addNameTextField.error = " Enter Name "
+            }
+            binding.addNameEditText.text?.trim()?.isDigitsOnly()== true -> {
+                binding.addNameTextField.error = " Invalid Name "
             }
             binding.addPriceEditText.text?.trim()?.isEmpty() == true -> {
                 binding.addPriceTextField.error = " Enter Price  "
@@ -116,4 +121,5 @@ class AddItemFragment : Fragment() {
         binding.addQuantityEditText.setText("")
 
     }
+
 }

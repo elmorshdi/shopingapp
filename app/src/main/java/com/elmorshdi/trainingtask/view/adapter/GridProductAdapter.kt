@@ -52,7 +52,7 @@ class GridProductAdapter(
     }
 
 
-    override fun onBindViewHolder(holder: GridProductAdapter.GridProductViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GridProductViewHolder, position: Int) {
         val product = getItem(position)
         holder.bind(product)
     }

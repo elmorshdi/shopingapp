@@ -5,8 +5,13 @@
         <item name="android:background">@drawable/ic_toggle_bg</item>
         <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
     </style>
+    <style name="BottomSheetDialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetBackground</item>
+    </style>
 
-    <style name="toggleButton"  parent="android:Theme.Material.Light">
+    <style name="bottomSheetBackground" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_bc</item>
+    </style>    <style name="toggleButton"  parent="android:Theme.Material.Light">
         <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
         <item name="android:textOn" />
         <item name="android:drawableTint"> @color/white</item>
