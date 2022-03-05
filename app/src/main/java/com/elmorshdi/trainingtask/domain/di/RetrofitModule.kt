@@ -1,6 +1,9 @@
 package com.elmorshdi.trainingtask.domain.di
 
+import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
 import com.elmorshdi.trainingtask.Constant
+import com.elmorshdi.trainingtask.Constant.TOKEN
 import com.elmorshdi.trainingtask.datasource.network.ApiService
 import com.elmorshdi.trainingtask.datasource.network.MyInterceptor
 import dagger.Module
@@ -11,38 +14,38 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
     @Provides
     @Singleton
-    fun provideInterceptor(string: String): MyInterceptor {
-        return MyInterceptor(string)
+    fun provideInterceptor(sharedPreferences: SharedPreferences): MyInterceptor {
+        return MyInterceptor(sharedPreferences)
     }
 
     @Provides
     @Singleton
-    fun provideOkhttpClient(token:String): OkHttpClient {
+    fun provideOkhttpClient(myInterceptor: MyInterceptor): OkHttpClient {
         val client = OkHttpClient.Builder().apply {
-            addInterceptor(MyInterceptor(token))
+            addInterceptor(myInterceptor)
         }
-
         return client.build()
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit( client: OkHttpClient): Retrofit {
+    fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constant.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
     }
+
     @Provides
     @Singleton
-    fun provideApiService( retrofit: Retrofit): ApiService {
+    fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
 

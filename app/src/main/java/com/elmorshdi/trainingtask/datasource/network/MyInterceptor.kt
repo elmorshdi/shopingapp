@@ -1,33 +1,32 @@
 package com.elmorshdi.trainingtask.datasource.network
 
 import android.content.SharedPreferences
-import com.elmorshdi.trainingtask.Constant
-import dagger.hilt.android.AndroidEntryPoint
+import android.util.Log
+import com.elmorshdi.trainingtask.view.util.SharedPreferencesManager.getToken
 import okhttp3.Interceptor
 import javax.inject.Inject
+
 class MyInterceptor
-    @Inject constructor(val token:String) : Interceptor {
-
+@Inject constructor(private val sharedPreferences: SharedPreferences) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-              if (token=="" ){
-          val request =chain.request()
-              .newBuilder()
-//              .addHeader("Authorization","Bearer $TOKEN")
-              .addHeader("Accept", "application/json")
-              .build()
-          print("token null")
-          return chain.proceed(request)
-      }
-         else{
-          val request =chain.request()
-              .newBuilder()
-              .addHeader("Authorization", token)
-              .addHeader("Accept", "application/json")
-              .build()
-          return chain.proceed(request)
-         }
-
-
-
+       val token= getToken(sharedPreferences)
+        Log.d("token","interceptor :$token")
+        return if (token.isNotEmpty()) {
+            Log.d("token","interceptor :$token")
+            val request = chain.request()
+                .newBuilder()
+                .addHeader("Authorization","Bearer $token")
+                .addHeader("Accept", "application/json")
+                .build()
+            print("token null")
+            chain.proceed(request)
+        } else {
+            println(token)
+            val request = chain.request()
+                .newBuilder()
+                .addHeader("Accept", "application/json")
+                .build()
+            chain.proceed(request)
+        }
     }
 }

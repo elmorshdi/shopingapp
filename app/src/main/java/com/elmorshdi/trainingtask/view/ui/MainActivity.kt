@@ -17,10 +17,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    @Inject
-lateinit var sharedPreferences: SharedPreferences
-@Inject
-lateinit var token:String
     private  var  doubleBackToExitPressedOnce :Boolean=false
     lateinit var navHostFragment:NavHostFragment
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -8,20 +8,16 @@ import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.elmorshdi.trainingtask.databinding.FragmentAddItemBinding
 import com.elmorshdi.trainingtask.domain.model.Product
-import com.elmorshdi.trainingtask.helper.containDigit
 import com.elmorshdi.trainingtask.helper.observeOnce
 import com.elmorshdi.trainingtask.helper.setProgressBar
-import com.elmorshdi.trainingtask.view.ui.mainpage.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddItemFragment : Fragment() {
-    private  val viewModel: AddItemViewModel by viewModels()
+    private val viewModel: AddItemViewModel by viewModels()
     private lateinit var binding: FragmentAddItemBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +30,7 @@ class AddItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         binding.addButton.setOnClickListener {
+        binding.addButton.setOnClickListener {
             validations()
         }
         binding.addBackArrow.setOnClickListener {
@@ -54,7 +50,7 @@ class AddItemFragment : Fragment() {
             binding.addNameEditText.text?.trim()?.isEmpty() == true -> {
                 binding.addNameTextField.error = " Enter Name "
             }
-            binding.addNameEditText.text?.trim()?.isDigitsOnly()== true -> {
+            binding.addNameEditText.text?.trim()?.isDigitsOnly() == true -> {
                 binding.addNameTextField.error = " Invalid Name "
             }
             binding.addPriceEditText.text?.trim()?.isEmpty() == true -> {

@@ -14,16 +14,23 @@ import com.github.ybq.android.spinkit.sprite.Sprite
 import com.github.ybq.android.spinkit.style.DoubleBounce
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-fun alertDialog(title:String, message:String, context: Context, myFunction: (Int,View) -> Unit, id: Int,view: View) {
+fun alertDialog(
+    title: String,
+    message: String,
+    context: Context,
+    myFunction: (Int, View) -> Unit,
+    id: Int,
+    view: View
+) {
     val builder = AlertDialog.Builder(context)
     builder.setTitle(title)
     builder.setMessage(message)
     builder.setIcon(android.R.drawable.ic_dialog_alert)
     //performing positive action
     builder.setPositiveButton("Yes") { _, _ ->
-        myFunction(id,view)
+        myFunction(id, view)
     }
-    builder.setNeutralButton("Cancel"){ _, _ ->
+    builder.setNeutralButton("Cancel") { _, _ ->
 
     }
     val alertDialog: AlertDialog = builder.create()
@@ -31,7 +38,13 @@ fun alertDialog(title:String, message:String, context: Context, myFunction: (Int
     alertDialog.show()
 }
 
-fun alertDialog(title:String, message:String, context: Context, myFunction: (View) -> Unit,view: View) {
+fun alertDialog(
+    title: String,
+    message: String,
+    context: Context,
+    myFunction: (View) -> Unit,
+    view: View
+) {
     val builder = AlertDialog.Builder(context)
     builder.setTitle(title)
     builder.setMessage(message)
@@ -40,13 +53,14 @@ fun alertDialog(title:String, message:String, context: Context, myFunction: (Vie
     builder.setPositiveButton("Yes") { _, _ ->
         myFunction(view)
     }
-    builder.setNeutralButton("Cancel"){ _, _ ->
+    builder.setNeutralButton("Cancel") { _, _ ->
 
     }
     val alertDialog: AlertDialog = builder.create()
     alertDialog.setCancelable(false)
     alertDialog.show()
 }
+
 fun setProgressBar(loginSpinKit: SpinKitView): ProgressBar {
     val progressBar = loginSpinKit as ProgressBar
     val doubleBounce: Sprite = DoubleBounce()
@@ -54,12 +68,13 @@ fun setProgressBar(loginSpinKit: SpinKitView): ProgressBar {
     progressBar.visibility = View.VISIBLE
     return progressBar
 }
- fun showBottomSheet(
+
+fun showBottomSheet(
     context: Context,
     viewModel: MainViewModel,
     layoutInflater: LayoutInflater
-):BottomSheetDialog {
-    val bottomSheet = BottomSheetDialog(context,R.style.BottomSheetDialogStyle)
+): BottomSheetDialog {
+    val bottomSheet = BottomSheetDialog(context, R.style.BottomSheetDialogStyle)
 
     val bindingSheet = DataBindingUtil.inflate<BottomSheetDialogBinding>(
         layoutInflater,
@@ -85,7 +100,7 @@ fun setProgressBar(loginSpinKit: SpinKitView): ProgressBar {
         viewModel.sortBy(3)
         bottomSheet.dismiss()
     }
-     bindingSheet.textViewSortBy.setOnClickListener {
+    bindingSheet.textViewSortBy.setOnClickListener {
         bottomSheet.dismiss()
     }
     bottomSheet.setCancelable(false)
@@ -93,5 +108,5 @@ fun setProgressBar(loginSpinKit: SpinKitView): ProgressBar {
     bottomSheet.setContentView(bindingSheet.root)
 
     bottomSheet.show()
-     return bottomSheet
+    return bottomSheet
 }
