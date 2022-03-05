@@ -39,7 +39,7 @@ class LoginViewModel @Inject constructor(
                         when (response.code()) {
                             200 -> {
                                 SharedPreferencesManager.signInShared(
-                                    sharedPreferences,
+                                    sharedPreferences.edit(),
                                     response.body()?.token!!,
                                     response.body()!!.data?.name!!
                                 )
@@ -48,7 +48,7 @@ class LoginViewModel @Inject constructor(
                             }
                             else -> {
                                 _isLoading.postValue(false)
-                                _stateCodeMessage.postValue(response.errorBody().toString())
+                                _stateCodeMessage.postValue(response.message().toString())
                             }
                         }
                     }
@@ -57,13 +57,6 @@ class LoginViewModel @Inject constructor(
             } catch (e: Exception) {
             _isLoading.postValue(false)
             _stateCodeMessage.postValue(e.toString())
-//                navigateToMain(view)
-//                SharedPreferencesManager.signInShared(
-//                    sharedPreferences,
-//                    "response.body()?.token!!",
-//                    "response.body()!!.data?.name!!"
-//                )
-//                TODO() //remove navigate
             }
         }
     }
