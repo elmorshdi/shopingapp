@@ -1,6 +1,5 @@
 package com.elmorshdi.trainingtask.domain.repository
 
-import androidx.lifecycle.LiveData
 import com.elmorshdi.trainingtask.datasource.model.ProductResponse
 import com.elmorshdi.trainingtask.datasource.model.UserResponse
 import com.elmorshdi.trainingtask.datasource.network.ApiService

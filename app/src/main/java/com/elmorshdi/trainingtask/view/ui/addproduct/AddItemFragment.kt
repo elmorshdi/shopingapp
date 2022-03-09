@@ -16,7 +16,7 @@ import com.elmorshdi.trainingtask.helper.setProgressBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddItemFragment : Fragment() {
+open class AddItemFragment : Fragment() {
     private val viewModel: AddItemViewModel by viewModels()
     private lateinit var binding: FragmentAddItemBinding
     override fun onCreateView(
@@ -100,7 +100,7 @@ class AddItemFragment : Fragment() {
             if (status) {
                 progressBar.visibility = View.INVISIBLE
                 Toast.makeText(requireContext(), "Product Added", Toast.LENGTH_LONG).show()
-                clearPage()
+                navigateToMain(binding.root)
             } else {
                 viewModel.stateCodeMessage.observeOnce(viewLifecycleOwner) {
                     progressBar.visibility = View.INVISIBLE
@@ -111,11 +111,6 @@ class AddItemFragment : Fragment() {
 
     }
 
-    private fun clearPage() {
-        binding.addNameEditText.setText("")
-        binding.addPriceEditText.setText("")
-        binding.addQuantityEditText.setText("")
 
-    }
 
 }

@@ -84,23 +84,23 @@ fun showBottomSheet(
     )
     bottomSheet.setContentView(bindingSheet.root)
 
-    bindingSheet.buttonMostRecent.setOnClickListener {
+    bindingSheet.dialogButtonMostRecent.setOnClickListener {
         viewModel.sortBy(0)
         bottomSheet.dismiss()
     }
-    bindingSheet.buttonPriceLtoH.setOnClickListener {
+    bindingSheet.dialogButtonPriceLtoH.setOnClickListener {
         viewModel.sortBy(1)
         bottomSheet.dismiss()
     }
-    bindingSheet.buttonPriceHtoL.setOnClickListener {
+    bindingSheet.dialogButtonPriceHtoL.setOnClickListener {
         viewModel.sortBy(2)
         bottomSheet.dismiss()
     }
-    bindingSheet.buttonName.setOnClickListener {
+    bindingSheet.dialogButtonName.setOnClickListener {
         viewModel.sortBy(3)
         bottomSheet.dismiss()
     }
-    bindingSheet.textViewSortBy.setOnClickListener {
+    bindingSheet.dialogTextViewSortBy.setOnClickListener {
         bottomSheet.dismiss()
     }
     bottomSheet.setCancelable(false)

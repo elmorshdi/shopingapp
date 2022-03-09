@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.elmorshdi.trainingtask.view.ui.mainpage.MainFragment"
-        android:label="fragment_main"
+        android:label="@string/label_fragment_main"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_addItemFragment"
@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.elmorshdi.trainingtask.view.ui.addproduct.AddItemFragment"
-        android:label="fragment_add_item"
+        android:label="@string/label_fragment_add_item"
         tools:layout="@layout/fragment_add_item">
         <action
             android:id="@+id/action_addItemFragment_to_mainFragment"
@@ -53,7 +53,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.elmorshdi.trainingtask.view.ui.login.LoginFragment"
-        android:label="login_fragment"
+        android:label="@string/label_login_fragment"
         tools:layout="@layout/login_fragment">
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
@@ -68,7 +68,7 @@
     <fragment
         android:id="@+id/productFragment"
         android:name="com.elmorshdi.trainingtask.view.ui.productview.ProductViewFragment"
-        android:label="ProductFragment">
+        android:label="@string/label_fragment_product">
         <action
             android:id="@+id/action_productFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -85,7 +85,7 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.elmorshdi.trainingtask.view.ui.splash.SplashFragment"
-        android:label="splash_fragment"
+        android:label="@string/label_splash_fragment"
         tools:layout="@layout/splash_fragment">
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"

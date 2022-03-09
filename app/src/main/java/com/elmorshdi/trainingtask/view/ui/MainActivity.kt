@@ -1,49 +1,45 @@
 package com.elmorshdi.trainingtask.view.ui
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import com.elmorshdi.trainingtask.Constant
 import com.elmorshdi.trainingtask.R
 import com.elmorshdi.trainingtask.view.ui.addproduct.AddItemFragmentDirections
 import com.elmorshdi.trainingtask.view.ui.productview.ProductViewFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private  var  doubleBackToExitPressedOnce :Boolean=false
-    lateinit var navHostFragment:NavHostFragment
+    private var doubleBackToExitPressedOnce: Boolean = false
+    private lateinit var navHostFragment: NavHostFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-         navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.main_Activity_nav_host_fragment) as NavHostFragment
         navHostFragment.navController
 
-        doubleBackToExitPressedOnce= false
-
+        doubleBackToExitPressedOnce = false
 
 
     }
 
-    override fun onBackPressed() {
-        when(NavHostFragment.findNavController(navHostFragment).currentDestination?.label){
 
-            "fragment_add_item"->{
+    override fun onBackPressed() {
+        when (NavHostFragment.findNavController(navHostFragment).currentDestination?.label) {
+
+            resources.getString(R.string.label_fragment_add_item) -> {
                 val action = AddItemFragmentDirections.actionAddItemFragmentToMainFragment()
                 NavHostFragment.findNavController(navHostFragment).navigate(action)
             }
-            "ProductFragment"->{
+            resources.getString(R.string.label_fragment_product) -> {
                 val action = ProductViewFragmentDirections.actionProductFragmentToMainFragment()
                 NavHostFragment.findNavController(navHostFragment).navigate(action)
             }
-            else->{
+            else -> {
                 exit()
             }
         }
@@ -57,9 +53,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         this.doubleBackToExitPressedOnce = true
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, " Please click BACK again to exit ", Toast.LENGTH_SHORT).show()
 
-        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+        Handler(Looper.getMainLooper()).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
 

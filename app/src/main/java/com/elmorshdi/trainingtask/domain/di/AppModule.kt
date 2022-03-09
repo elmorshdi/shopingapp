@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
-import com.elmorshdi.trainingtask.Constant
 import com.elmorshdi.trainingtask.Constant.APP_SETTINGS
-import com.elmorshdi.trainingtask.Constant.TOKEN
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

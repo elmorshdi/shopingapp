@@ -1,9 +1,7 @@
 package com.elmorshdi.trainingtask.domain.di
 
 import android.content.SharedPreferences
-import androidx.security.crypto.EncryptedSharedPreferences
 import com.elmorshdi.trainingtask.Constant
-import com.elmorshdi.trainingtask.Constant.TOKEN
 import com.elmorshdi.trainingtask.datasource.network.ApiService
 import com.elmorshdi.trainingtask.datasource.network.MyInterceptor
 import dagger.Module

@@ -30,7 +30,6 @@ fun bindProductsList(recyclerView: RecyclerView, list: List<Product>?) {
 
 @BindingAdapter("ProductsListHor")
 fun bindProductsListHor(recyclerView: RecyclerView, list: List<Product>?) {
-
     list?.let { (recyclerView.adapter as HorizontalProductAdapter).submitList(list) }
 
 }
@@ -45,6 +44,7 @@ fun showToast(view: View, msg: String?) {
 
 @BindingAdapter("setQuantity")
 fun setQuantity(textView: AppCompatTextView, quantity: String?) {
-    textView.text = "Quantity $quantity "
+    val text = StringBuilder().append("Quantity:").append(quantity).toString()
+    textView.text = text
 }
 

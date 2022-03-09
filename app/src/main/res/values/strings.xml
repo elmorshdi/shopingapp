@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">App Task</string>
-    <string name="hello_mostafa">Hello Mostafa!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="add_new_item" translatable="false">Add New Item</string>
     <string name="item_name" translatable="false">Item Name</string>
-    <string name="item_price" translatable="false">999999</string>
     <string name="item_currency">EGP</string>
     <string name="name">Name</string>
     <string name="price">Price</string>
@@ -15,16 +13,13 @@
     <string name="email_or_phone_number">Email or phone number</string>
     <string name="password">password</string>
     <string name="log_in">Log In</string>
-    <string name="product">Product</string>
     <string name="delete_item">delete item</string>
-    <string name="dialogTitle" translatable="false">Delete Product </string>
-    <string name="dialogMessage" translatable="false">Are Sure Deleting Product</string>
-    <string name="logo">logo</string>
     <string name="todo">TODO</string>
-    <string name="sort_by_most_recent">sort By : Most Recent </string>
-    <string name="sort_by_price_low_to_high">sort By : Low To High</string>
-    <string name="sort_by_price_high_to_low">sort By : Price : High To Low</string>
-    <string name="sort_by_name_a_to_z">sort By : Name : A To Z</string>
+    <string name="label_fragment_main">Fragment Main</string>
+    <string name="label_fragment_add_item">Fragment Add Item</string>
+    <string name="label_login_fragment">Fragment LogIn</string>
+    <string name="label_fragment_product">Product Fragment</string>
+    <string name="label_splash_fragment">Splash Fragment</string>
 
     <string name="most_recent">Most Recent</string>
     <string name="price_low_to_high">Price : Low To High</string>
@@ -37,5 +32,6 @@ A mixture of both uppercase and lowercase letters\n
 A mixture of letters and numbers\n
 Inclusion of at least one special character !@#$%^&amp;+=_</string>
     <string name="enter_valid_email"> Enter Valid Email </string>
+    <string name="quantity_value">Quantity:</string>
 
 </resources>

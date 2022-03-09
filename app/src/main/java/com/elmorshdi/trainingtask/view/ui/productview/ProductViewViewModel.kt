@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.elmorshdi.trainingtask.R
 import com.elmorshdi.trainingtask.domain.repository.Repository
 import com.elmorshdi.trainingtask.helper.alertDialog
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,9 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductViewViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-    val deleteState: LiveData<Boolean>
-        get() = _deleteState
-    private val _deleteState: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean>
         get() = _isLoading
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
@@ -38,18 +34,15 @@ class ProductViewViewModel @Inject constructor(private val repository: Repositor
                         200 -> {
                             _isLoading.postValue(false)
 
-                            _deleteState.postValue(true)
                             navigateToMain(view )
                         }
                         else -> {
                             _isLoading.postValue(false)
 
-                            _deleteState.postValue(false)
                             _errorMessage.postValue(response.message().toString())
                         }
                     }
                 } catch (e: Exception) {
-                    _deleteState.postValue(false)
                     _errorMessage.postValue(e.toString())
                 }
             }

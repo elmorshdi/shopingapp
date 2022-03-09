@@ -24,13 +24,14 @@ fun CharSequence.isEmailValid(): Boolean {
 }
 
 //  is string contain digit
-fun CharSequence.containDigit(): Boolean {
+/*fun CharSequence.containDigit(): Boolean {
     val length = this.length
     val digitMatcher = Pattern.compile("^(?=.*[0-9]).*$length,}$").matcher(this)
     return digitMatcher.matches()
-}
+}*/
 
 // for signup to return dismissed
+/*
 fun CharSequence.isValidSignUpPassword(): String {
     val lowerCaseLetterMatcher = Pattern.compile("^(?=.*\\p{Ll}).{8,}$").matcher(this)
     val upperCaseLetterMatcher = Pattern.compile("^(?=.*\\p{Lu}).{8,}$").matcher(this)
@@ -49,6 +50,7 @@ fun CharSequence.isValidSignUpPassword(): String {
         else -> "true"
     }
 }
+*/
 
 fun CharSequence.isValidPassword(): Boolean {
     val regex = "^(?=.*\\p{Ll})(?=.*\\p{Lu})(?=.*[!@#\$%^&+=_])(?=.*[0-9]).{8,}$"
