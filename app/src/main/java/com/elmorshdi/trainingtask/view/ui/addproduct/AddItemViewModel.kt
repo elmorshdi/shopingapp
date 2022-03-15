@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elmorshdi.trainingtask.domain.model.Product
 import com.elmorshdi.trainingtask.domain.repository.Repository
+import com.elmorshdi.trainingtask.view.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,14 +27,14 @@ class AddItemViewModel @Inject constructor(private val repository: Repository) :
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    val response = repository.addProducts(product)
-                    when (response.code()) {
-                        200 -> {
+
+                    when (val response = repository.addProducts(product)) {
+                        is Resource.Success -> {
                             _addState.postValue(true)
                         }
-                        else -> {
+                        is Resource.Error-> {
                             _addState.postValue(false)
-                            _stateCodeMessage.postValue(response.message().toString())
+                            _stateCodeMessage.postValue(response.message!!)
                         }
                     }
                 } catch (e: Exception) {

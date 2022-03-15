@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.elmorshdi.trainingtask.domain.repository.Repository
+import com.elmorshdi.trainingtask.view.util.Resource
 import com.elmorshdi.trainingtask.view.util.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -34,21 +35,20 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             try { withContext(Dispatchers.IO) {
 
-                    val response = repository.login(email, password)
                     withContext(Dispatchers.Main) {
-                        when (response.code()) {
-                            200 -> {
+                        when ( val response = repository.login(email, password)) {
+                            is Resource.Success -> {
                                 SharedPreferencesManager.signInShared(
                                     sharedPreferences.edit(),
-                                    response.body()?.token!!,
-                                    response.body()!!.data?.name!!
+                                    response.data?.token,
+                                    response.data?.data?.name
                                 )
                                 _isLoading.postValue(false)
                                 navigateToMain(view)
                             }
-                            else -> {
+                            is Resource.Error -> {
                                 _isLoading.postValue(false)
-                                _stateCodeMessage.postValue(response.message().toString())
+                                _stateCodeMessage.postValue(response.message!!)
                             }
                         }
                     }

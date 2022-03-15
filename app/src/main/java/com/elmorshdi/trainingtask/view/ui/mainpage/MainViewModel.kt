@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import com.elmorshdi.trainingtask.domain.model.Product
 import com.elmorshdi.trainingtask.domain.repository.Repository
 import com.elmorshdi.trainingtask.helper.alertDialog
+import com.elmorshdi.trainingtask.view.util.Resource
 import com.elmorshdi.trainingtask.view.util.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -79,15 +80,15 @@ class MainViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
 
                 try {
-                    val response = repository.getProducts()
-                    when (response.code()) {
-                        200 -> {
-                            _products.postValue(response.body()?.data!!)
-                            _sortedProducts.postValue(response.body()?.data!!)
+
+                    when (val response = repository.getProducts()) {
+                        is Resource.Success-> {
+                            _products.postValue(response.data?.data!!)
+                            _sortedProducts.postValue(response.data.data!!)
                         }
-                        else -> {
+                        is Resource.Error -> {
                             _errorState.postValue(true)
-                            _errorMessage.postValue(response.message().toString())
+                            _errorMessage.postValue(response.message!!)
                         }
                     }
                 } catch (e: Exception) {

@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.elmorshdi.trainingtask.domain.repository.Repository
 import com.elmorshdi.trainingtask.helper.alertDialog
+import com.elmorshdi.trainingtask.view.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,17 +30,16 @@ class ProductViewViewModel @Inject constructor(private val repository: Repositor
         viewModelScope.launch {
             withContext(Dispatchers.Main) {
                 try {
-                    val response = repository.deleteProduct(id)
-                    when (response.code()) {
-                        200 -> {
+                    when (val response = repository.deleteProduct(id)) {
+                        is Resource.Success-> {
                             _isLoading.postValue(false)
 
                             navigateToMain(view )
                         }
-                        else -> {
+                        is Resource.Error->{
                             _isLoading.postValue(false)
 
-                            _errorMessage.postValue(response.message().toString())
+                            _errorMessage.postValue(response.message!!)
                         }
                     }
                 } catch (e: Exception) {
