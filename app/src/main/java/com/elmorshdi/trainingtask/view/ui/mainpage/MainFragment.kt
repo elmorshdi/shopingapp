@@ -1,5 +1,6 @@
 package com.elmorshdi.trainingtask.view.ui.mainpage
 
+import android.R
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.elmorshdi.trainingtask.databinding.FragmentMainBinding
 import com.elmorshdi.trainingtask.domain.model.Product
+import com.elmorshdi.trainingtask.helper.ItemOffsetDecoration
+import com.elmorshdi.trainingtask.helper.SpacesItemDecoration
 import com.elmorshdi.trainingtask.helper.showBottomSheet
 import com.elmorshdi.trainingtask.view.adapter.GridProductAdapter
 import com.elmorshdi.trainingtask.view.adapter.HorizontalProductAdapter
@@ -47,6 +50,8 @@ class MainFragment : Fragment(), GridProductAdapter.Interaction,
         val adapterHor = HorizontalProductAdapter(interaction = this)
         binding.mainRecyclerHor.adapter = adapterHor
         //Setup Grid recyclerView
+        val itemDecoration = SpacesItemDecoration(10)
+        binding.mainRecycler.addItemDecoration(itemDecoration)
         val adapter = GridProductAdapter(interaction = this)
         binding.mainRecycler.adapter = adapter
     }
