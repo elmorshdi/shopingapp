@@ -19,7 +19,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:showToast="@{viewModel.errorMessage}"
         tools:context=".view.ui.productview.ProductViewFragment">
 
 
@@ -41,7 +40,6 @@
                 android:contentDescription="@string/back_arrow"
                 android:src="@drawable/ic_baseline_arrow_back_24"
                 android:tint="@color/white"
-                android:onClick="@{viewModel::navigateToMain}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,11 +60,11 @@
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/view_spin_kit"
-            style="@style/SpinKitView.Large.Circle"
+            style="@style/SpinKitView.Large.ThreeBounce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{viewModel.isLoading()?View.VISIBLE:View.GONE}"
+            android:visibility="gone"
             android:translationZ="@dimen/_20sdp"
             app:SpinKit_Color="@color/yellow"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -166,7 +164,6 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@color/red"
             android:text="@string/delete_item"
-            android:onClick="@{()->viewModel.deleteButtonOnClickListener(deleteButton,product.id)}"
             android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintBottom_toBottomOf="parent"

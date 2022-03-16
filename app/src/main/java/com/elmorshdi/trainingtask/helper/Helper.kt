@@ -18,17 +18,15 @@ fun alertDialog(
     title: String,
     message: String,
     context: Context,
-    myFunction: (Int, View) -> Unit,
-    id: Int,
-    view: View
-) {
+    myFunction: (Int) -> Unit,
+    id: Int) {
     val builder = AlertDialog.Builder(context)
     builder.setTitle(title)
     builder.setMessage(message)
     builder.setIcon(android.R.drawable.ic_dialog_alert)
     //performing positive action
     builder.setPositiveButton("Yes") { _, _ ->
-        myFunction(id, view)
+        myFunction(id)
     }
     builder.setNeutralButton("Cancel") { _, _ ->
 
