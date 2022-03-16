@@ -5,11 +5,12 @@ import com.elmorshdi.trainingtask.datasource.model.UserResponse
 import com.elmorshdi.trainingtask.datasource.network.ApiService
 import com.elmorshdi.trainingtask.domain.model.Product
 import com.elmorshdi.trainingtask.view.util.Resource
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import javax.inject.Inject
 
 
-class Repository @Inject constructor(private val apiService: ApiService):MainRepository {
-
+class Repository @Inject constructor(private val apiService: ApiService) : MainRepository {
     override suspend fun getProducts(): Resource<ProductResponse> {
         return try {
             val response = apiService.getProducts()
@@ -17,13 +18,18 @@ class Repository @Inject constructor(private val apiService: ApiService):MainRep
             if (response.isSuccessful && result != null) {
                 Resource.Success(result)
             } else {
-                Resource.Error(response.message())
+                try {
+                    Resource.Error(getError(response.errorBody()!!))
+
+
+                } catch (e: java.lang.Exception) {
+                    Resource.Error(e.message!!)
+                }
             }
         } catch (e: Exception) {
             Resource.Error(e.message ?: "An error Occurred")
         }
     }
-
 
     override suspend fun addProducts(product: Product): Resource<ProductResponse> {
         return try {
@@ -32,7 +38,12 @@ class Repository @Inject constructor(private val apiService: ApiService):MainRep
             if (response.isSuccessful && result != null) {
                 Resource.Success(result)
             } else {
-                Resource.Error(response.message())
+                try {
+                    Resource.Error(getError(response.errorBody()!!))
+
+                } catch (e: java.lang.Exception) {
+                    Resource.Error(e.message!!)
+                }
             }
         } catch (e: Exception) {
             Resource.Error(e.message ?: "An error Occurred")
@@ -46,11 +57,17 @@ class Repository @Inject constructor(private val apiService: ApiService):MainRep
             if (response.isSuccessful && result != null) {
                 Resource.Success(result)
             } else {
-                Resource.Error(response.message())
+                try {
+                    Resource.Error(getError(response.errorBody()!!))
+
+                } catch (e: java.lang.Exception) {
+                    Resource.Error(e.message!!)
+                }
             }
         } catch (e: Exception) {
             Resource.Error(e.message ?: "An error Occurred")
-        }    }
+        }
+    }
 
     override suspend fun login(email: String, password: String): Resource<UserResponse> {
         return try {
@@ -59,11 +76,29 @@ class Repository @Inject constructor(private val apiService: ApiService):MainRep
             if (response.isSuccessful && result != null) {
                 Resource.Success(result)
             } else {
-                Resource.Error(response.message())
+                try {
+                    Resource.Error(getError(response.errorBody()!!))
+
+                } catch (e: Exception) {
+                    Resource.Error(e.message!!)
+                }
             }
         } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error Occurred")
+            if (e.message.equals(
+                    "Unable to resolve host \"android-training.appssquare.com\":" +
+                            " No address associated with hostname"
+                )
+            ) {
+                Resource.Error("Check your Internet Connection")
+            } else {
+                Resource.Error(e.message ?: "An error Occurred")
+            }
         }
-}
+    }
+
+    private fun getError(response: ResponseBody): String {
+        val jObjError = JSONObject(response.string())
+        return jObjError.getString("message")
+    }
 }
 
