@@ -1,7 +1,6 @@
 package com.elmorshdi.trainingtask.view.ui.addproduct
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elmorshdi.trainingtask.domain.model.Product
@@ -9,44 +8,70 @@ import com.elmorshdi.trainingtask.domain.repository.Repository
 import com.elmorshdi.trainingtask.view.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class AddItemViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-    val addState: LiveData<Boolean>
-        get() = _addState
-    private val _addState: MutableLiveData<Boolean> = MutableLiveData()
-    val stateCodeMessage: LiveData<String>
-        get() = _stateCodeMessage
-    private val _stateCodeMessage: MutableLiveData<String> = MutableLiveData()
+    private val _addItemUiState = MutableStateFlow<AddItemUiState>(AddItemUiState.Empty)
+    val addItemUiState: StateFlow<AddItemUiState> = _addItemUiState
 
+    sealed class AddItemUiState {
+        object Success : AddItemUiState()
+        data class Error(val error: AddItemError) : AddItemUiState()
+        object Loading : AddItemUiState()
+        object Empty : AddItemUiState()
+    }
 
-    fun postProduct(product: Product) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                try {
+    sealed class AddItemError {
+        data class NetworkError(val errorMessage: String) : AddItemError()
+        object NameNotValid : AddItemError()
+        object PriceNotValid : AddItemError()
+        object QuantityNotValid : AddItemError()
 
+    }
+
+    fun postProduct(name: String, price: String, quantity: String) {
+        when {
+
+            name.isEmpty()||name.isDigitsOnly() -> _addItemUiState.value =
+                AddItemUiState.Error(AddItemError.NameNotValid)
+            price.isEmpty()||price.toInt()==0-> _addItemUiState.value =
+                AddItemUiState.Error(AddItemError.PriceNotValid)
+            quantity.isEmpty()||quantity.toInt()==0 ->  _addItemUiState.value =
+                AddItemUiState.Error(AddItemError.QuantityNotValid)
+            else -> {
+                val product = Product(
+                    name = name,
+                    price =  price.toInt()
+                   ,
+                    quantity = quantity.toInt()
+                )
+                viewModelScope.launch(Dispatchers.IO) {
+                    _addItemUiState.value = AddItemUiState.Loading
                     when (val response = repository.addProducts(product)) {
                         is Resource.Success -> {
-                            _addState.postValue(true)
+                            _addItemUiState.value = AddItemUiState.Success
                         }
-                        is Resource.Error-> {
-                            _addState.postValue(false)
-                            _stateCodeMessage.postValue(response.message!!)
+                        is Resource.Error -> {
+                            _addItemUiState.value =
+                                AddItemUiState.Error(AddItemError.NetworkError(response.message!!))
                         }
                     }
-                } catch (e: Exception) {
-                    _addState.postValue(false)
-                    _stateCodeMessage.postValue(e.toString())
+
+
                 }
 
 
             }
         }
+
+
     }
 }
+
 
 
 

@@ -15,7 +15,7 @@ data class Product(
     @SerializedName("price")
     val price: Int? =null,
     @SerializedName("quantity")
-    val quantity: Int?=null,
+    val quantity: Int? =null,
     @SerializedName("restaurant_id")
     val restaurant_id: Int?=null
 ): Parcelable

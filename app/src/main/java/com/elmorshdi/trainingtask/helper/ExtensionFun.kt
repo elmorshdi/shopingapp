@@ -51,7 +51,9 @@ fun CharSequence.isValidSignUpPassword(): String {
     }
 }
 */
-
+fun Int.isEmpty():Boolean{
+    return  (this.toString().isEmpty()|| this == 0)
+}
 fun CharSequence.isValidPassword(): Boolean {
     val regex = "^(?=.*\\p{Ll})(?=.*\\p{Lu})(?=.*[!@#\$%^&+=_])(?=.*[0-9]).{8,}$"
     val pattern = Pattern.compile(regex)

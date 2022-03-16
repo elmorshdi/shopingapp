@@ -47,14 +47,14 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    sealed class LoginUiState {
+   sealed class LoginUiState {
         data class Success(val token: String, val name: String) : LoginUiState()
         data class Error(val error: LoginViewModel.Error) : LoginUiState()
         object Loading : LoginUiState()
         object Empty : LoginUiState()
     }
 
-    sealed class Error {
+   sealed class Error {
         data class NetworkError(val errorMessage: String) : Error()
         object PasswordNotValid : Error()
         object EmailNotValid : Error()
