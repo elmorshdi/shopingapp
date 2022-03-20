@@ -23,37 +23,6 @@ fun CharSequence.isEmailValid(): Boolean {
         false
 }
 
-//  is string contain digit
-/*fun CharSequence.containDigit(): Boolean {
-    val length = this.length
-    val digitMatcher = Pattern.compile("^(?=.*[0-9]).*$length,}$").matcher(this)
-    return digitMatcher.matches()
-}*/
-
-// for signup to return dismissed
-/*
-fun CharSequence.isValidSignUpPassword(): String {
-    val lowerCaseLetterMatcher = Pattern.compile("^(?=.*\\p{Ll}).{8,}$").matcher(this)
-    val upperCaseLetterMatcher = Pattern.compile("^(?=.*\\p{Lu}).{8,}$").matcher(this)
-    val specialCharacterMatcher = Pattern.compile("^(?=.*[!@#\$%^&+=_]).{8,}$").matcher(this)
-    val digitMatcher = Pattern.compile("^(?=.*[0-9]).{8,}$").matcher(this)
-//    (?=.{8,})(?=.*\p{Lu}.*\p{Lu})(?=.*[!@#$&*])(?=.*[0-9])(?=.*\p{Ll}.*\p{Ll})
-
-    return when {
-        this.isEmpty() -> "Must Not Be Empty"
-        this.length <= 8 -> "Length Must Be More Than 8"
-        this.contains(" ") -> "Must Not Have Space"
-        !upperCaseLetterMatcher.matches() -> "Must  have upper case letter"
-        !lowerCaseLetterMatcher.matches() -> "Must  have lower case letter"
-        !specialCharacterMatcher.matches() -> "Must have special Character [!@#\$%^&+=_]"
-        !digitMatcher.matches() -> "Must have number"
-        else -> "true"
-    }
-}
-*/
-fun Int.isEmpty():Boolean{
-    return  (this.toString().isEmpty()|| this == 0)
-}
 fun CharSequence.isValidPassword(): Boolean {
     val regex = "^(?=.*\\p{Ll})(?=.*\\p{Lu})(?=.*[!@#\$%^&+=_])(?=.*[0-9]).{8,}$"
     val pattern = Pattern.compile(regex)

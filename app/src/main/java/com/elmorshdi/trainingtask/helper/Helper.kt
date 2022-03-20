@@ -3,7 +3,6 @@ package com.elmorshdi.trainingtask.helper
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.elmorshdi.trainingtask.R
@@ -57,14 +56,6 @@ fun alertDialog(
     val alertDialog: AlertDialog = builder.create()
     alertDialog.setCancelable(false)
     alertDialog.show()
-}
-
-fun setProgressBar(loginSpinKit: SpinKitView): ProgressBar {
-    val progressBar = loginSpinKit as ProgressBar
-    val doubleBounce: Sprite = DoubleBounce()
-    progressBar.indeterminateDrawable = doubleBounce
-    progressBar.visibility = View.VISIBLE
-    return progressBar
 }
 
 fun showBottomSheet(

@@ -1,4 +1,4 @@
-package com.elmorshdi.trainingtask.domain.repository
+package com.elmorshdi.trainingtask.datasource.repository
 
 import com.elmorshdi.trainingtask.datasource.model.ProductResponse
 import com.elmorshdi.trainingtask.datasource.model.UserResponse

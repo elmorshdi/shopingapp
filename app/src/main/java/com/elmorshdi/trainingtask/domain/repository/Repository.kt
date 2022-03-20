@@ -1,8 +1,10 @@
 package com.elmorshdi.trainingtask.domain.repository
 
+import com.elmorshdi.trainingtask.Constant.BASE_URL
 import com.elmorshdi.trainingtask.datasource.model.ProductResponse
 import com.elmorshdi.trainingtask.datasource.model.UserResponse
 import com.elmorshdi.trainingtask.datasource.network.ApiService
+import com.elmorshdi.trainingtask.datasource.repository.MainRepository
 import com.elmorshdi.trainingtask.domain.model.Product
 import com.elmorshdi.trainingtask.view.util.Resource
 import okhttp3.ResponseBody
@@ -20,14 +22,16 @@ class Repository @Inject constructor(private val apiService: ApiService) : MainR
             } else {
                 try {
                     Resource.Error(getError(response.errorBody()!!))
-
-
                 } catch (e: java.lang.Exception) {
                     Resource.Error(e.message!!)
                 }
             }
         } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error Occurred")
+            if (!internetIsConnected() ) {
+                Resource.Error("Check your Internet Connection")
+            } else {
+                Resource.Error(e.message ?: "An error Occurred")
+            }
         }
     }
 
@@ -84,11 +88,7 @@ class Repository @Inject constructor(private val apiService: ApiService) : MainR
                 }
             }
         } catch (e: Exception) {
-            if (e.message.equals(
-                    "Unable to resolve host \"android-training.appssquare.com\":" +
-                            " No address associated with hostname"
-                )
-            ) {
+            if (!internetIsConnected() ) {
                 Resource.Error("Check your Internet Connection")
             } else {
                 Resource.Error(e.message ?: "An error Occurred")
@@ -99,6 +99,14 @@ class Repository @Inject constructor(private val apiService: ApiService) : MainR
     private fun getError(response: ResponseBody): String {
         val jObjError = JSONObject(response.string())
         return jObjError.getString("message")
+    }
+    private fun internetIsConnected(): Boolean {
+        return try {
+            val command = "ping -c 1 $BASE_URL"
+            Runtime.getRuntime().exec(command).waitFor() == 0
+        } catch (e: java.lang.Exception) {
+            false
+        }
     }
 }
 
