@@ -83,19 +83,19 @@ fun showBottomSheet(
     bottomSheet.setContentView(bindingSheet.root)
 
     bindingSheet.dialogButtonMostRecent.setOnClickListener {
-        viewModel.sortBy(0)
+        viewModel.sortList(MainViewModel.Sort.MostRecent)
         bottomSheet.dismiss()
     }
     bindingSheet.dialogButtonPriceLtoH.setOnClickListener {
-        viewModel.sortBy(1)
+        viewModel.sortList(MainViewModel.Sort.PriceLowToHigh)
         bottomSheet.dismiss()
     }
     bindingSheet.dialogButtonPriceHtoL.setOnClickListener {
-        viewModel.sortBy(2)
+        viewModel.sortList(MainViewModel.Sort.PriceHighToLow)
         bottomSheet.dismiss()
     }
     bindingSheet.dialogButtonName.setOnClickListener {
-        viewModel.sortBy(3)
+        viewModel.sortList(MainViewModel.Sort.NameAToZ)
         bottomSheet.dismiss()
     }
     bindingSheet.dialogTextViewSortBy.setOnClickListener {

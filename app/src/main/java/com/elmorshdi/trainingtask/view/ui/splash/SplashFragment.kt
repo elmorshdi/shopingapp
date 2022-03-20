@@ -18,7 +18,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
     @Inject
-lateinit var sharedPreferences: SharedPreferences
+    lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,58 +27,38 @@ lateinit var sharedPreferences: SharedPreferences
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
         super.onViewCreated(view, savedInstanceState)
-        val logged= getLoginValue(sharedPreferences)
+        val logged = getLoginValue(sharedPreferences)
 
         val motionLayout: MotionLayout = view.findViewById(R.id.motionLayout)
         motionLayout.startLayoutAnimation()
-        motionLayout.setTransitionListener(object : TransitionListener{
-            override fun onTransitionStarted(
-                motionLayout: MotionLayout?,
-                startId: Int,
-                endId: Int
-            ) {
-                println("onTransitionStarted")
-             }
-
-            override fun onTransitionChange(
-                motionLayout: MotionLayout?,
-                startId: Int,
-                endId: Int,
-                progress: Float
-            ) {                println("onTransitionChange")
-
-            }
-
+        motionLayout.setTransitionListener(object : TransitionListener {
+            override fun onTransitionStarted(motionLayout: MotionLayout?,startId: Int,endId: Int ) {}
+            override fun onTransitionChange(motionLayout: MotionLayout?,startId: Int,endId: Int,progress: Float) {}
             override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
-
-                    println("onTransitionCompleted")
-
-                    val action = if (logged) {
-                        SplashFragmentDirections.actionSplashFragmentToMainFragment()
-                    }else{
-                        SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-                    }
-                    view.findNavController().navigate(action)
+                val action = if (logged) {
+                    SplashFragmentDirections.actionSplashFragmentToMainFragment()
+                } else {
+                    SplashFragmentDirections.actionSplashFragmentToLoginFragment()
                 }
-
-
+                view.findNavController().navigate(action)
+            }
             override fun onTransitionTrigger(
                 motionLayout: MotionLayout?,
                 triggerId: Int,
                 positive: Boolean,
                 progress: Float
             ) {
-             }
-
+            }
         })
 
 
     }
-
-
 
 
 }

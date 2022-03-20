@@ -14,8 +14,9 @@ import com.elmorshdi.trainingtask.view.util.Resource
 import com.elmorshdi.trainingtask.view.util.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,42 +24,90 @@ class MainViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val repository: Repository
 ) : ViewModel() {
-
+    val mainUiState: StateFlow<MainUiState>
+        get() = _mainUiState
+    private val _mainUiState = MutableStateFlow<MainUiState>(MainUiState.Empty)
+    val recyclerShape: StateFlow<RecyclerShape>
+        get() = mRecyclerShape
+    val mRecyclerShape = MutableStateFlow<RecyclerShape>(RecyclerShape.Grid)
     private val products: LiveData<List<Product>>
         get() = _products
     private val _products: MutableLiveData<List<Product>> = MutableLiveData()
     val sortedProducts: LiveData<List<Product>>
         get() = _sortedProducts
     private val _sortedProducts: MutableLiveData<List<Product>> = MutableLiveData()
+    private fun getProductsList() {
+        viewModelScope.launch(Dispatchers.Main) {
+            _mainUiState.value = MainUiState.Loading
 
+            when (val response = repository.getProducts()) {
+                is Resource.Success -> {
+                    val productsList = response.data?.data!!
+                    _products.postValue(productsList)
+                    _sortedProducts.postValue(productsList)
 
-    val recyclerVisibility: LiveData<Boolean>
-        get() = _recyclerVisibility
-    private val _recyclerVisibility: MutableLiveData<Boolean> = MutableLiveData()
+                    _mainUiState.value = MainUiState.Success
+                }
+                is Resource.Error -> {
+                    _mainUiState.value = MainUiState.Error(response.message!!)
+                }
+            }
 
-    val state: LiveData<Boolean>
-        get() = _state
-    private val _state: MutableLiveData<Boolean> = MutableLiveData()
-    val errorState: LiveData<Boolean>
-        get() = _errorState
-    private val _errorState: MutableLiveData<Boolean> = MutableLiveData()
-    val errorMessage: LiveData<String>
-        get() = _errorMessage
-    private val _errorMessage: MutableLiveData<String> = MutableLiveData()
+        }
+    }
+
+    sealed class RecyclerShape {
+        object Grid : RecyclerShape()
+        object Vertical : RecyclerShape()
+
+    }
+
+    sealed class MainUiState {
+        object Empty : MainUiState()
+        object Success : MainUiState()
+        data class Error(val error: String) : MainUiState()
+        object Loading : MainUiState()
+    }
+
+    sealed class Sort {
+        object MostRecent : Sort()
+        object PriceHighToLow : Sort()
+        object PriceLowToHigh : Sort()
+        object NameAToZ : Sort()
+    }
+
+    fun sortList(sort: Sort) {
+        when (sort) {
+            is Sort.MostRecent -> {
+                _sortedProducts.postValue(products.value!!)
+                _sortText.postValue("sort By : Most Recent ")
+            }
+            is Sort.PriceHighToLow -> {
+                _sortedProducts.postValue(products.value!!.sortedByDescending { product -> product.price })
+                _sortText.postValue("sort By : Price : High To Low")
+            }
+            is Sort.PriceLowToHigh -> {
+                _sortedProducts.postValue(products.value!!.sortedByDescending { product -> product.price }
+                    .reversed())
+                _sortText.postValue("sort By : Low To High ")
+            }
+            is Sort.NameAToZ -> {
+                _sortedProducts.postValue(products.value!!.sortedBy { product -> product.name })
+                _sortText.postValue("sort By : Name : A To Z")
+            }
+        }
+    }
+
     val sortText: LiveData<String>
         get() = _sortText
     private val _sortText: MutableLiveData<String> = MutableLiveData()
 
 
     init {
+        getProductsList()
         _sortText.postValue("sort By : Most Recent ")
-        getProductList()
-        _recyclerVisibility.postValue(false)
     }
 
-    fun recyclerVisibility(checked: Boolean) {
-        _recyclerVisibility.postValue(checked)
-    }
 
     private fun signOut(view: View) {
         SharedPreferencesManager.signOutShared(sharedPreferences.edit())
@@ -73,61 +122,12 @@ class MainViewModel @Inject constructor(
         )
     }
 
-    private fun getProductList() {
-        _errorState.postValue(false)
-        _state.postValue(false)
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-
-                try {
-
-                    when (val response = repository.getProducts()) {
-                        is Resource.Success-> {
-                            _products.postValue(response.data?.data!!)
-                            _sortedProducts.postValue(response.data.data!!)
-                        }
-                        is Resource.Error -> {
-                            _errorState.postValue(true)
-                            _errorMessage.postValue(response.message!!)
-                        }
-                    }
-                } catch (e: Exception) {
-                    _errorMessage.postValue(e.toString())
-                    _errorState.postValue(true)
-                }
-                _state.postValue(true)
-            }
-        }
-    }
 
     fun addProduct(view: View) {
         val action = MainFragmentDirections.actionMainFragmentToAddItemFragment()
         view.findNavController().navigate(action)
     }
 
-    fun sortBy(i: Int) {
-        when (i) {
-            0 -> {
-                _sortedProducts.postValue(products.value)
-                _sortText.postValue("sort By : Most Recent ")
-            }
-            2 -> {
-                _sortedProducts.postValue(sortedProducts.value?.sortedByDescending { product -> product.price })
-                _sortText.postValue("sort By : Price : High To Low")
-            }
-            1 -> {
-                _sortText.postValue("sort By : Low To High ")
-                _sortedProducts.postValue(sortedProducts.value?.sortedByDescending { product ->
-                    product.price
-                }
-                    ?.reversed())
-            }
-            3 -> {
-                _sortText.postValue("sort By : Name : A To Z")
-                _sortedProducts.postValue(sortedProducts.value?.sortedBy { product -> product.name })
-            }
-        }
-    }
 }
 
 

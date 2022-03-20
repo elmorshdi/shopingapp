@@ -61,7 +61,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/blue"
-            app:layout_constraintBottom_toTopOf="@id/main_Recycler"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_custom_action_bar">
@@ -81,13 +80,13 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/ViewButton"
+                app:layout_constraintEnd_toStartOf="@+id/viewButton"
                 app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatToggleButton
-                android:id="@+id/ViewButton"
+                android:id="@+id/viewButton"
                 style="@style/toggleButton"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
@@ -108,9 +107,8 @@
             android:layout_gravity="center"
             android:drawableTop="@drawable/ic_baseline_error_outline_24"
             android:drawableTint="@color/red"
-            android:text="@{viewModel.errorMessage}"
             android:textAlignment="center"
-            android:visibility="@{viewModel.errorState ?  View.VISIBLE :View.GONE}"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +121,7 @@
             android:layout_height="0dp"
             android:layout_margin="@dimen/_8sdp"
             android:orientation="vertical"
-            android:visibility="@{viewModel.recyclerVisibility?View.INVISIBLE:View.VISIBLE}"
+            android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/main_add_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -139,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_8sdp"
-            android:visibility="@{viewModel.recyclerVisibility?View.VISIBLE:View.INVISIBLE}"
+            android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/main_add_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -153,7 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{viewModel.state ?  View.GONE :View.VISIBLE }"
+            android:visibility="gone"
             app:SpinKit_Color="@color/yellow"
             android:translationZ="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -177,7 +175,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_Recycler" />
+             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
