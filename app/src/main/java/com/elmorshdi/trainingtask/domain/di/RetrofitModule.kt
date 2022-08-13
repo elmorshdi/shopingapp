@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import com.elmorshdi.trainingtask.Constant
 import com.elmorshdi.trainingtask.datasource.network.ApiService
 import com.elmorshdi.trainingtask.datasource.network.MyInterceptor
+import com.elmorshdi.trainingtask.datasource.repository.MainRepository
+import com.elmorshdi.trainingtask.domain.repository.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,5 +48,10 @@ object RetrofitModule {
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
+    @Singleton
+    @Provides
+    fun provideDefaultShoppingRepository(
+        api: ApiService
+    ) = Repository( api) as MainRepository
 
 }

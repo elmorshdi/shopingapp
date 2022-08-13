@@ -2,12 +2,14 @@ package com.elmorshdi.trainingtask.view.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elmorshdi.trainingtask.domain.repository.Repository
+import com.elmorshdi.trainingtask.datasource.model.UserResponse
+import com.elmorshdi.trainingtask.datasource.repository.MainRepository
 import com.elmorshdi.trainingtask.helper.isEmailValid
 import com.elmorshdi.trainingtask.helper.isValidPassword
 import com.elmorshdi.trainingtask.view.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -16,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: MainRepository
 ) : ViewModel() {
     private val _loginUiState = MutableStateFlow<LoginUiState>(LoginUiState.Empty)
     val loginUiState: StateFlow<LoginUiState> = _loginUiState
@@ -29,25 +31,32 @@ class LoginViewModel @Inject constructor(
                 _loginUiState.value = LoginUiState.Error(Error.PasswordNotValid)
             }
             else -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    _loginUiState.value = LoginUiState.Loading
-                    when (val response = repository.login(email, password)) {
-                        is Resource.Success -> {
-                            val token = response.data?.token!!
-                            val name = response.data.data?.name!!
-                            _loginUiState.value = LoginUiState.Success(token, name)
-                        }
-                        is Resource.Error -> {
-                            _loginUiState.value =
-                                LoginUiState.Error(Error.NetworkError(response.message!!))
-                        }
-                    }
+                successfulLogin(email, password)
+            }
+        }
+    }
+
+    fun successfulLogin(
+        email: String,
+        password: String
+    ) :Job{
+        return viewModelScope.launch(Dispatchers.IO) {
+            _loginUiState.value = LoginUiState.Loading
+            when (val response = repository.login(email, password)) {
+                is Resource.Success -> {
+                    val token = response.data?.token!!
+                    val name = response.data.data?.name!!
+                    _loginUiState.value = LoginUiState.Success(token, name)
+                }
+                is Resource.Error -> {
+                    _loginUiState.value =
+                        LoginUiState.Error(Error.NetworkError(response.message!!))
                 }
             }
         }
     }
 
-   sealed class LoginUiState {
+    sealed class LoginUiState {
         data class Success(val token: String, val name: String) : LoginUiState()
         data class Error(val error: LoginViewModel.Error) : LoginUiState()
         object Loading : LoginUiState()

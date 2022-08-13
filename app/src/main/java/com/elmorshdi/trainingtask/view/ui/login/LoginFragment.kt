@@ -39,6 +39,15 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        val numbersMap=mutableMapOf("one" to 1,"two" to 2, "three" to 3,"threeAgain" to 3)
+        numbersMap.remove("three")
+
+        numbersMap.keys.remove("three")
+
+        numbersMap.values.remove(3)
+
+         
         binding.loginButton.setOnClickListener {
             val email = binding.loginEmailEditText.text?.trim().toString()
             val password = binding.loginPasswordEditText.text?.trim().toString()

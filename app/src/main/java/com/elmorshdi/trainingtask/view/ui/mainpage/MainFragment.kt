@@ -13,9 +13,10 @@ import androidx.navigation.findNavController
 import com.elmorshdi.trainingtask.databinding.FragmentMainBinding
 import com.elmorshdi.trainingtask.domain.model.Product
 import com.elmorshdi.trainingtask.helper.SpacesItemDecoration
-import com.elmorshdi.trainingtask.helper.showBottomSheet
+import com.elmorshdi.trainingtask.helper.alertDialog
 import com.elmorshdi.trainingtask.view.adapter.GridProductAdapter
 import com.elmorshdi.trainingtask.view.adapter.HorizontalProductAdapter
+import com.elmorshdi.trainingtask.view.util.SharedPreferencesManager
 import com.elmorshdi.trainingtask.view.util.SharedPreferencesManager.getUsername
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -33,62 +34,44 @@ class MainFragment : Fragment(), GridProductAdapter.Interaction,
     lateinit var sharedPreferences: SharedPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewButton.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.mRecyclerShape.value = MainViewModel.RecyclerShape.Vertical
-            } else {
-                viewModel.mRecyclerShape.value = MainViewModel.RecyclerShape.Grid
-            }
+        binding.mainAddButton.setOnClickListener {
+            addProduct(it)
+        }
+        binding.signOutArrow.setOnClickListener {
+            alertDialog(
+                "sign Out", "Are you sure you want to sign out ?",
+                it.context, ::signOut, it
+            )
+        }
+        viewModel.getProductsList()
+            lifecycleScope.launchWhenCreated {
 
-        }
-        binding.sortButton.setOnClickListener {
-            val bottomSheet = showBottomSheet(requireContext(), viewModel, layoutInflater)
-            bottomSheet.setCanceledOnTouchOutside(true)
-        }
-        lifecycleScope.launchWhenCreated {
-            viewModel.recyclerShape.collect { event ->
-                when (event) {
-                    is MainViewModel.RecyclerShape.Grid -> {
-                        binding.mainRecycler.visibility = View.VISIBLE
-                        binding.mainRecyclerHor.visibility = View.INVISIBLE
-                    }
-                    is MainViewModel.RecyclerShape.Vertical -> {
-                        binding.mainRecyclerHor.visibility = View.VISIBLE
-                        binding.mainRecycler.visibility = View.INVISIBLE
+                viewModel.mainUiState.collect { event ->
+                    when (event) {
+                        is MainViewModel.MainUiState.Loading ->
+                            binding.spinKit.isVisible = true
+                        is MainViewModel.MainUiState.Error -> {
+                            binding.spinKit.isVisible = false
+                            binding.mainRecycler.isVisible = false
+                            binding.errorText.isVisible = true
+                            binding.errorText.text = event.error
+                        }
+                        is MainViewModel.MainUiState.Success -> {
+                            binding.spinKit.isVisible = false
+                            binding.errorText.isVisible = false
+                            setUpRecyclerView()
+                        }
+                        else -> UInt
                     }
                 }
 
-            }
-        }
-        lifecycleScope.launchWhenCreated {
-            viewModel.mainUiState.collect { event ->
-                when (event) {
-                    is MainViewModel.MainUiState.Loading ->
-                        binding.spinKit.isVisible = true
-                    is MainViewModel.MainUiState.Error -> {
-                        binding.spinKit.isVisible = false
-                        binding.mainRecycler.isVisible = false
-                        binding.mainRecyclerHor.isVisible = false
-                        binding.errorText.isVisible = true
-                        binding.errorText.text = event.error
-                    }
-                    is MainViewModel.MainUiState.Success -> {
-                        binding.spinKit.isVisible = false
-                        binding.errorText.isVisible = false
-                        setUpRecyclerView()
-                    }
-                    else -> UInt
-                }
+
             }
 
-        }
     }
 
 
     private fun setUpRecyclerView() {
-        //Setup Hor recyclerView
-        val adapterHor = HorizontalProductAdapter(interaction = this)
-        binding.mainRecyclerHor.adapter = adapterHor
         //Setup Grid recyclerView
         val itemDecoration = SpacesItemDecoration(10)
         binding.mainRecycler.addItemDecoration(itemDecoration)
@@ -104,9 +87,19 @@ class MainFragment : Fragment(), GridProductAdapter.Interaction,
         binding = FragmentMainBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        // setUpRecyclerView()
         binding.welcomeTextView.text = getUsername(sharedPreferences)
         return binding.root
+    }
+
+    private fun signOut(view: View) {
+        SharedPreferencesManager.signOutShared(sharedPreferences.edit())
+        val action = MainFragmentDirections.actionMainFragmentToLoginFragment()
+        view.findNavController().navigate(action)
+    }
+
+    private fun addProduct(view: View) {
+        val action = MainFragmentDirections.actionMainFragmentToAddItemFragment()
+        view.findNavController().navigate(action)
     }
 
     override fun onItemSelected(product: Product) {

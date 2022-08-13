@@ -34,8 +34,7 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:contentDescription="@string/back_arrow"
-                android:onClick="@{viewModel::signOutIconClick}"
-                android:rotation="180"
+                 android:rotation="180"
                 android:src="@drawable/ic_baseline_exit_to_app_24"
 
                 android:tint="@color/white"
@@ -56,49 +55,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/sortLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/blue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_custom_action_bar">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/sortButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_8sdp"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="8dp"
-                android:background="@color/blue"
-                android:drawableEnd="@drawable/ic_arrow_down"
-                android:drawablePadding="@dimen/_5sdp"
-                android:text="@{viewModel.sortText}"
-                android:textAlignment="textStart"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/viewButton"
-                app:layout_constraintHorizontal_bias="0.1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatToggleButton
-                android:id="@+id/viewButton"
-                style="@style/toggleButton"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@drawable/ic_toggle_bg"
-                android:checked="false"
-                android:drawableTint="@color/white"
-                android:padding="@dimen/_5sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/sortButton"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/errorText"
@@ -116,34 +72,21 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_Recycler"
-            ProductsList="@{viewModel.sortedProducts}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_8sdp"
             android:orientation="vertical"
-            android:visibility="invisible"
+            android:visibility="visible"
+            ProductsList="@{viewModel.products}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/main_add_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sortLayout"
+            app:layout_constraintTop_toBottomOf="@id/main_custom_action_bar"
             android:clipToPadding="false"
             app:spanCount="2"
             tools:listitem="@layout/item" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_RecyclerHor"
-            ProductsListHor="@{viewModel.sortedProducts}"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/_8sdp"
-            android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/main_add_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sortLayout"
-            tools:listitem="@layout/item_horizontal" />
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/spin_kit"
@@ -168,8 +111,7 @@
             android:layout_marginEnd="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@color/blue"
-            android:onClick="@{ viewModel::addProduct}"
-            android:text="@string/add_new_item"
+             android:text="@string/add_new_item"
             android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintBottom_toBottomOf="parent"

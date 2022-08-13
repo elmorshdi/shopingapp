@@ -1,6 +1,5 @@
 package com.elmorshdi.trainingtask.domain.repository
 
-import com.elmorshdi.trainingtask.Constant.BASE_URL
 import com.elmorshdi.trainingtask.datasource.model.ProductResponse
 import com.elmorshdi.trainingtask.datasource.model.UserResponse
 import com.elmorshdi.trainingtask.datasource.network.ApiService
@@ -27,11 +26,8 @@ class Repository @Inject constructor(private val apiService: ApiService) : MainR
                 }
             }
         } catch (e: Exception) {
-            if (!internetIsConnected() ) {
-                Resource.Error("Check your Internet Connection")
-            } else {
-                Resource.Error(e.message ?: "An error Occurred")
-            }
+                 Resource.Error("An error Occurred Check your Internet Connection")
+
         }
     }
 
@@ -88,11 +84,8 @@ class Repository @Inject constructor(private val apiService: ApiService) : MainR
                 }
             }
         } catch (e: Exception) {
-            if (!internetIsConnected() ) {
-                Resource.Error("Check your Internet Connection")
-            } else {
-                Resource.Error(e.message ?: "An error Occurred")
-            }
+                 Resource.Error("An error Occurred Check your Internet Connection")
+
         }
     }
 
@@ -100,13 +93,5 @@ class Repository @Inject constructor(private val apiService: ApiService) : MainR
         val jObjError = JSONObject(response.string())
         return jObjError.getString("message")
     }
-    private fun internetIsConnected(): Boolean {
-        return try {
-            val command = "ping -c 1 $BASE_URL"
-            Runtime.getRuntime().exec(command).waitFor() == 0
-        } catch (e: java.lang.Exception) {
-            false
-        }
-    }
-}
+ }
 

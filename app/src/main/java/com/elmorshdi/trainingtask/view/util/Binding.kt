@@ -28,11 +28,7 @@ fun bindProductsList(recyclerView: RecyclerView, list: List<Product>?) {
 
 }
 
-@BindingAdapter("ProductsListHor")
-fun bindProductsListHor(recyclerView: RecyclerView, list: List<Product>?) {
-    list?.let { (recyclerView.adapter as HorizontalProductAdapter).submitList(list) }
 
-}
 
 @BindingAdapter("showToast")
 fun showToast(view: View, msg: String?) {
